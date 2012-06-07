@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainActivityLinearLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="1" >
+
+    <ScrollView
+        android:id="@+id/mainActivityScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+		<LinearLayout
+		    xmlns:android="http://schemas.android.com/apk/res/android"
+		    android:id="@+id/mainActivityLinearLayout1"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent"
+		    android:gravity="center"
+		    android:orientation="vertical"
+		    android:weightSum="1" >
+
+			<LinearLayout
+			    android:id="@+id/drunkLevelLinearLayout"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_margin="@dimen/general_margin"
+			    android:orientation="vertical" >
+
+			    <SeekBar
+			        android:id="@+id/drunkLevelSeekBar"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1" />
+
+			    <RelativeLayout
+			        android:id="@+id/drunkLevelRelativeLayout"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginTop="10dp"
+			        android:layout_weight="1" >
+
+			        <TextView
+			            android:id="@+id/drunkLevelTextView"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_weight="1"
+			            android:layout_alignParentLeft="true"
+			            android:text="drunkTextView" />
+
+			        <Button
+			            android:id="@+id/updateDrunkLevelButton"
+			            android:layout_width="@dimen/button_size"
+			            android:layout_height="wrap_content"
+			            android:layout_weight="1"
+			            android:layout_alignParentRight="true"
+			            android:text="Update" />
+
+			    </RelativeLayout>
+
+			</LinearLayout>
+
+			<LinearLayout
+			    android:id="@+id/mwahLevelLinearLayout"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_margin="@dimen/general_margin"
+			    android:orientation="vertical" >
+
+			    <SeekBar
+			        android:id="@+id/mwahLevelSeekBar"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"			        
+			        android:layout_weight="1" />
+
+			    <RelativeLayout
+			        android:id="@+id/mwahButtonsRelativeLayout"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"	
+			        android:layout_marginTop="10dp" 		        
+			        android:layout_weight="1" >
+
+			        <TextView
+			            android:id="@+id/mwahLevelTextView"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_weight="1"
+			            android:layout_alignParentLeft="true"
+			            android:text="mwahTextView" />
+			        
+
+			        <Button
+			            android:id="@+id/updateMwahLevelButton"
+			            android:layout_width="@dimen/button_size"
+			            android:layout_height="wrap_content"
+			            android:layout_weight="1"
+			            android:layout_alignParentRight="true"
+			            android:text="Send Kiss" />
+
+			    </RelativeLayout>
+			</LinearLayout>
+
+			<LinearLayout
+			    android:id="@+id/huggleLevelLinearLayout"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_margin="@dimen/general_margin"
+			    android:orientation="vertical" >
+
+			    <SeekBar
+			        android:id="@+id/huggleLevelSeekBar"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_weight="1" />
+
+			    <RelativeLayout
+			        android:id="@+id/huggleLevelRelativeLayout"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginTop="10dp"
+			        android:layout_weight="1" >
+
+			        <TextView
+			            android:id="@+id/huggleLevelTextView"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_weight="1"
+			            android:layout_alignParentLeft="true"
+			            android:text="huggleTextView" />
+
+			        <Button
+			            android:id="@+id/updateHuggleLevelButton"
+			            android:layout_width="@dimen/button_size"
+			            android:layout_height="wrap_content"
+			            android:layout_weight="1"
+			            android:layout_alignParentRight="true"
+			            android:text="Send Hug" />
+
+			    </RelativeLayout>
+			</LinearLayout>
+
+			<Button
+			    android:id="@+id/updateAllLevelsButton"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="@dimen/general_margin"
+			    android:layout_marginRight="@dimen/general_margin"
+			    android:text="Update ALL!!" />
+
+			<Button
+			    android:id="@+id/instapicButton"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="Instapic!" />
+		
+		</LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
