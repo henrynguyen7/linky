@@ -77,20 +77,17 @@ public class MainActivity extends Activity
     	mDrunkLevelSeekBar.setMax(MAX_DRUNK_LEVEL);
     	mDrunkLevelSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener()
     	{
-			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) 
 			{
 				mDrunkLevel = progress;
 				mDrunkLevelTextView.setText("Drunk Level: " + progress);
 			}
 
-			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) 
 			{			
 				//do nothing
 			}
 
-			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) 
 			{			
 				//do nothing
@@ -118,7 +115,6 @@ public class MainActivity extends Activity
     	mMwahLevelSeekBar.setMax(MAX_MWAH_LEVEL);
     	mMwahLevelSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener()
     	{
-			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) 
 			{
 				mMwahLevel = progress;
@@ -132,13 +128,11 @@ public class MainActivity extends Activity
 				mMwahLevelTextView.setText("Mw" + appendText + "h!");
 			}
 
-			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) 
 			{			
 				//do nothing
 			}
 
-			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) 
 			{			
 				//do nothing
@@ -166,7 +160,6 @@ public class MainActivity extends Activity
     	mHuggleLevelSeekBar.setMax(MAX_HUGGLE_LEVEL);
     	mHuggleLevelSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener()
     	{
-			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) 
 			{
 				mHuggleLevel = progress;
@@ -180,13 +173,11 @@ public class MainActivity extends Activity
 				mHuggleLevelTextView.setText("H" + appendText + "ggle!");
 			}
 
-			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) 
 			{			
 				//do nothing
 			}
 
-			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) 
 			{			
 				//do nothing
@@ -240,13 +231,11 @@ public class MainActivity extends Activity
     	});
     }
     
-    @Override
 	protected void onStart() 
     {    	    	
     	super.onStart();
 	}
     
-	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) 
     {
         if (keyCode == KeyEvent.KEYCODE_BACK) 
@@ -305,7 +294,6 @@ public class MainActivity extends Activity
 	
 
 	//called after camera intent finished
-	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent)
 	{
 	    if (requestCode == mRequestCode && resultCode == RESULT_OK)

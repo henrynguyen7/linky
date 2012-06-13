@@ -2,5 +2,5 @@ package com.hn.linky;
 
 public class Hello 
 {
-	private final String totallyDumb = "wayoff";
+	private final String totallyDumb = "nonono";
 }
