@@ -27,16 +27,13 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity
 {	
-	private int MenuShootImage = 0;
-	private Uri mImageUri;
-	
 	private final String TAG = "MainActivity";
+	String mImageUri;
 	
 	private final int MAX_DRUNK_LEVEL = 10;
 	private final int MAX_MWAH_LEVEL = 10;
 	private final int MAX_HUGGLE_LEVEL = 10;
 	
-	private Context mContext;
 	private Intent mIntent;	
 	
 	private int mDrunkLevel;	
@@ -63,11 +60,8 @@ public class MainActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {	
     	super.onCreate(savedInstanceState);
-    	setContentView(R.layout.main_activity);
-    	mContext = this.getApplicationContext();
-    	mIntent = new Intent(MainActivity.this, LinkyIntentService.class);    	
-    	
-    	
+    	setContentView(R.layout.main_activity);    	
+    	mIntent = new Intent(MainActivity.this, LinkyIntentService.class);
     	
     	/** Drunk level **/
     	mDrunkLevelTextView = (TextView) findViewById(R.id.drunkLevelTextView);
@@ -99,8 +93,8 @@ public class MainActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {      	    	
-    	    	mIntent.setAction(LinkyIntentService.ACTION_UPDATE_DRUNK_LEVEL);
-				mIntent.putExtra(LinkyIntentService.EXTRA_DRUNK_LEVEL, mDrunkLevel);
+    	    	mIntent.setAction(Constants.ACTION_UPDATE_DRUNK_LEVEL);
+				mIntent.putExtra(Constants.EXTRA_DRUNK_LEVEL, mDrunkLevel);
 				startService(mIntent);
     	    }  
     	});
@@ -144,8 +138,8 @@ public class MainActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {      	    	
-    	    	mIntent.setAction(LinkyIntentService.ACTION_UPDATE_MWAH_LEVEL);
-				mIntent.putExtra(LinkyIntentService.EXTRA_MWAH_LEVEL, mMwahLevel);
+    	    	mIntent.setAction(Constants.ACTION_UPDATE_MWAH_LEVEL);
+				mIntent.putExtra(Constants.EXTRA_MWAH_LEVEL, mMwahLevel);
 				startService(mIntent);
     	    }  
     	});
@@ -189,8 +183,8 @@ public class MainActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {      	    	
-    	    	mIntent.setAction(LinkyIntentService.ACTION_UPDATE_HUGGLE_LEVEL);
-				mIntent.putExtra(LinkyIntentService.EXTRA_HUGGLE_LEVEL, mHuggleLevel);
+    	    	mIntent.setAction(Constants.ACTION_UPDATE_HUGGLE_LEVEL);
+				mIntent.putExtra(Constants.EXTRA_HUGGLE_LEVEL, mHuggleLevel);
 				startService(mIntent);
     	    }  
     	});
@@ -203,10 +197,10 @@ public class MainActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {      	    	
-    	    	mIntent.setAction(LinkyIntentService.ACTION_UPDATE_ALL_LEVELS);
-    	    	mIntent.putExtra(LinkyIntentService.EXTRA_DRUNK_LEVEL, mDrunkLevel);
-    	    	mIntent.putExtra(LinkyIntentService.EXTRA_MWAH_LEVEL, mMwahLevel);
-				mIntent.putExtra(LinkyIntentService.EXTRA_HUGGLE_LEVEL, mHuggleLevel);
+    	    	mIntent.setAction(Constants.ACTION_UPDATE_ALL_LEVELS);
+    	    	mIntent.putExtra(Constants.EXTRA_DRUNK_LEVEL, mDrunkLevel);
+    	    	mIntent.putExtra(Constants.EXTRA_MWAH_LEVEL, mMwahLevel);
+				mIntent.putExtra(Constants.EXTRA_HUGGLE_LEVEL, mHuggleLevel);
 				startService(mIntent);
     	    }  
     	});
@@ -276,7 +270,7 @@ public class MainActivity extends Activity
 	private void sendInstapic()
 	{
 		Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-	    intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
 	    startActivityForResult(intent, mRequestCode);
 	}
 

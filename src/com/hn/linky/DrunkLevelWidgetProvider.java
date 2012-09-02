@@ -19,24 +19,24 @@ public class DrunkLevelWidgetProvider extends AppWidgetProvider
     public void onReceive(Context context, Intent intent) 
     {	
     	Intent newIntent = new Intent(context, LinkyIntentService.class);
-    	newIntent.setAction(LinkyIntentService.ACTION_SEND_MESSAGE);
+    	newIntent.setAction(Constants.ACTION_SEND_MESSAGE);
     	
     	String action = intent.getAction();
     	if (action.equals(POKE_ACTION))
     	{
-    		newIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_WIDGET_POKE);
+    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_POKE);
     	}
     	else if (action.equals(HUG_ACTION))
     	{
-    		newIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_WIDGET_HUG);
+    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_HUG);
     	}
     	else if (action.equals(KISS_ACTION))
     	{
-    		newIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_WIDGET_KISS);
+    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_KISS);
     	}
     	else if (action.equals(TICKLE_ACTION))
     	{
-    		newIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_WIDGET_TICKLE);
+    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_TICKLE);
     	} 	
     	
         context.startService(newIntent);
@@ -79,47 +79,3 @@ public class DrunkLevelWidgetProvider extends AppWidgetProvider
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 	}
 }
-
-//package com.hn.linky;
-//
-//import android.app.PendingIntent;
-//import android.appwidget.AppWidgetManager;
-//import android.appwidget.AppWidgetProvider;
-//import android.content.ComponentName;
-//import android.content.Context;
-//import android.content.Intent;
-//import android.widget.RemoteViews;
-//
-//public class DrunkLevelWidgetProvider extends AppWidgetProvider 
-//{	
-//    @Override
-//    public void onReceive(Context context, Intent intent) 
-//    {	
-//    	int drunkLevel = 0;
-//    	
-//    	Intent newIntent = new Intent(context, LinkyService.class);
-//    	newIntent.setAction(LinkyService.ACTION_WIDGET_UPDATE_DRUNK_LEVEL);
-//    	newIntent.putExtra(LinkyService.EXTRA_DRUNK_LEVEL, drunkLevel);    	
-//        context.startService(newIntent);
-//        
-//        super.onReceive(context, intent);   
-//    }
-//    
-//	@Override
-//	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) 
-//	{        
-//		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.send_message_widget);   
-//        
-//        /** updateDrunkLevelButton intent **/
-//        Intent updateDrunkLevelIntent = new Intent(context, DrunkLevelWidgetProvider.class);
-//        updateDrunkLevelIntent.setAction(LinkyService.ACTION_WIDGET_UPDATE_DRUNK_LEVEL);        
-//        PendingIntent updateDrunkLevelPendingIntent = PendingIntent.getBroadcast(context, 0, updateDrunkLevelIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        remoteViews.setOnClickPendingIntent(R.id.button1, updateDrunkLevelPendingIntent);    
-//        
-//        ComponentName thisWidget = new ComponentName(context, DrunkLevelWidgetProvider.class);
-//        AppWidgetManager manager = AppWidgetManager.getInstance(context);        
-//        manager.updateAppWidget(thisWidget, remoteViews); 
-//		
-//        super.onUpdate(context, appWidgetManager, appWidgetIds);
-//	}
-//}

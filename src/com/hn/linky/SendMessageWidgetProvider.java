@@ -19,24 +19,24 @@ public class SendMessageWidgetProvider extends AppWidgetProvider
     public void onReceive(Context context, Intent intent) 
     {	
     	Intent newIntent = new Intent(context, LinkyIntentService.class);
-    	newIntent.setAction(LinkyIntentService.ACTION_SEND_MESSAGE);
+    	newIntent.setAction(Constants.ACTION_SEND_MESSAGE);
     	
     	String action = intent.getAction();
     	if (action.equals(POKE_ACTION))
     	{
-    		newIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_WIDGET_POKE);
+    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_POKE);
     	}
     	else if (action.equals(HUG_ACTION))
     	{
-    		newIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_WIDGET_HUG);
+    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_HUG);
     	}
     	else if (action.equals(KISS_ACTION))
     	{
-    		newIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_WIDGET_KISS);
+    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_KISS);
     	}
     	else if (action.equals(TICKLE_ACTION))
     	{
-    		newIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_WIDGET_TICKLE);
+    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_TICKLE);
     	} 	
     	
         context.startService(newIntent);

@@ -11,9 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
 
 public class SendMessageActivity extends Activity
 {		
@@ -39,7 +36,7 @@ public class SendMessageActivity extends Activity
     	{
 			public void onClick(View v)
     		{    			
-    			mIntent.setAction(LinkyIntentService.ACTION_SEND_BUZZ);
+    			mIntent.setAction(Constants.ACTION_SEND_BUZZ);
 				startService(mIntent);
     		}
     	});
@@ -49,8 +46,8 @@ public class SendMessageActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {      	    	
-    	    	mIntent.setAction(LinkyIntentService.ACTION_SEND_MESSAGE);
-				mIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_POKE);
+    	    	mIntent.setAction(Constants.ACTION_SEND_MESSAGE);
+				mIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_POKE);
 				startService(mIntent);
     	    }  
     	});
@@ -60,8 +57,8 @@ public class SendMessageActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {  
-    	    	mIntent.setAction(LinkyIntentService.ACTION_SEND_MESSAGE);
-				mIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_HUG);
+    	    	mIntent.setAction(Constants.ACTION_SEND_MESSAGE);
+				mIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_HUG);
 				startService(mIntent);
     	    }  
     	});
@@ -71,8 +68,8 @@ public class SendMessageActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {  
-    	    	mIntent.setAction(LinkyIntentService.ACTION_SEND_MESSAGE);
-				mIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_KISS);
+    	    	mIntent.setAction(Constants.ACTION_SEND_MESSAGE);
+				mIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_KISS);
 				startService(mIntent);
     	    }  
     	});
@@ -82,8 +79,8 @@ public class SendMessageActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {  
-    	    	mIntent.setAction(LinkyIntentService.ACTION_SEND_MESSAGE);
-				mIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_TICKLE);
+    	    	mIntent.setAction(Constants.ACTION_SEND_MESSAGE);
+				mIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_TICKLE);
 				startService(mIntent);
     	    }  
     	});
@@ -93,8 +90,8 @@ public class SendMessageActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {  
-    	    	mIntent.setAction(LinkyIntentService.ACTION_SEND_MESSAGE);
-				mIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_HOLDHANDS);
+    	    	mIntent.setAction(Constants.ACTION_SEND_MESSAGE);
+				mIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_HOLDHANDS);
 				startService(mIntent);
     	    }  
     	});
@@ -104,8 +101,8 @@ public class SendMessageActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {  
-    	    	mIntent.setAction(LinkyIntentService.ACTION_SEND_MESSAGE);
-				mIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_MISSESYOU);
+    	    	mIntent.setAction(Constants.ACTION_SEND_MESSAGE);
+				mIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_MISSESYOU);
 				startService(mIntent);
     	    }  
     	});
@@ -115,8 +112,8 @@ public class SendMessageActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {  
-    	    	mIntent.setAction(LinkyIntentService.ACTION_SEND_MESSAGE);
-				mIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_SMILE_LOW);
+    	    	mIntent.setAction(Constants.ACTION_SEND_MESSAGE);
+				mIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_SMILE_LOW);
 				startService(mIntent);
     	    }  
     	});
@@ -126,8 +123,8 @@ public class SendMessageActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {  
-    	    	mIntent.setAction(LinkyIntentService.ACTION_SEND_MESSAGE);
-				mIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_SMILE_MEDIUM);
+    	    	mIntent.setAction(Constants.ACTION_SEND_MESSAGE);
+				mIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_SMILE_MEDIUM);
 				startService(mIntent);
     	    }  
     	});
@@ -137,8 +134,8 @@ public class SendMessageActivity extends Activity
     	{  
     	    public void onClick(View v) 
     	    {  
-    	    	mIntent.setAction(LinkyIntentService.ACTION_SEND_MESSAGE);
-				mIntent.putExtra(LinkyIntentService.EXTRA_MESSAGE, LinkyIntentService.MESSAGE_SMILE_HIGH);
+    	    	mIntent.setAction(Constants.ACTION_SEND_MESSAGE);
+				mIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_SMILE_HIGH);
 				startService(mIntent);
     	    }  
     	});

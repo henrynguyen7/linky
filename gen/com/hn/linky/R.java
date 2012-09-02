@@ -27,7 +27,6 @@ public final class R {
         public static final int button2=0x7f080003;
         public static final int button3=0x7f080004;
         public static final int button4=0x7f080005;
-        public static final int datePicker=0x7f08002c;
         public static final int descriptionTextView=0x7f080007;
         public static final int drunkLevelLinearLayout=0x7f080018;
         public static final int drunkLevelRelativeLayout=0x7f08001a;
@@ -49,7 +48,6 @@ public final class R {
         public static final int mainActivityLinearLayout=0x7f080015;
         public static final int mainActivityLinearLayout1=0x7f080017;
         public static final int mainActivityScrollView=0x7f080016;
-        public static final int messageEditText=0x7f08002e;
         public static final int missYouButton=0x7f080010;
         public static final int mwahButtonsRelativeLayout=0x7f08001f;
         public static final int mwahLevelLinearLayout=0x7f08001d;
@@ -60,9 +58,7 @@ public final class R {
         public static final int smileHighButton=0x7f080014;
         public static final int smileLowButton=0x7f080012;
         public static final int smileMediumButton=0x7f080013;
-        public static final int startTimerButton=0x7f08002f;
         public static final int tickleButton=0x7f08000e;
-        public static final int timePicker=0x7f08002d;
         public static final int unlockButton=0x7f08002a;
         public static final int updateAllLevelsButton=0x7f080027;
         public static final int updateDrunkLevelButton=0x7f08001c;
@@ -77,7 +73,6 @@ public final class R {
         public static final int main_activity=0x7f030002;
         public static final int passwordform=0x7f030003;
         public static final int send_message_widget=0x7f030004;
-        public static final int texttimer=0x7f030005;
     }
     public static final class string {
         public static final int appName=0x7f060001;
