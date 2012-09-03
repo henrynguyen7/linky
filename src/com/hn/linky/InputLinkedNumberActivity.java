@@ -15,7 +15,9 @@ import android.widget.EditText;
 public class InputLinkedNumberActivity extends Activity
 {	
     public void onCreate(Bundle savedInstanceState)
-    {    	
+    {    
+    	super.onCreate(savedInstanceState);
+    	
     	if (isLoggedIn())
     	{	
     		logIn();
@@ -38,8 +40,6 @@ public class InputLinkedNumberActivity extends Activity
         	    }  
         	});
     	}
-    	
-    	super.onCreate(savedInstanceState);
     }
         
     private boolean isLoggedIn()

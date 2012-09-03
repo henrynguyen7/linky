@@ -22,9 +22,7 @@ public class LinkyIntentService extends IntentService
 {
 	public static final String TAG = "LinkyIntentService";
 	
-	private String mSourceNumber;
 	private String mLinkedNumber;	
-	
 	private Handler mHandler;	
 	private String mMessage;
 	private Uri mImageUri;
@@ -37,14 +35,14 @@ public class LinkyIntentService extends IntentService
 	@Override
 	public void onCreate() 
 	{	
+		super.onCreate();
+		
 		mHandler = new Handler();		
 		TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-		mSourceNumber = telephonyManager.getLine1Number();
+		setSourceNumber(telephonyManager.getLine1Number());		
 		mLinkedNumber = getLinkedNumber();
 		
 		BugSenseHandler.setup(this, "abc580a4");
-		
-		super.onCreate();
 	}	
 	
 	private String getLinkedNumber()
@@ -52,28 +50,50 @@ public class LinkyIntentService extends IntentService
     	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     	return sharedPreferences.getString(Constants.SHARED_PREF_LINKED_NUMBER, null);
     }
+	
+	private void setSourceNumber(String phoneNumber)
+    {
+    	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+    	SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putString(Constants.SHARED_PREF_SOURCE_NUMBER, phoneNumber);
+		editor.commit();	
+    }
 		
 	@Override
 	protected void onHandleIntent(Intent intent) 
 	{
-		if (intent.getExtras() != null)
+		if (intent.getExtras() != null || intent.getAction() != null)
 		{
+			String action = intent.getAction();
 			Bundle bundle = intent.getExtras();
-			String action = intent.getAction();		
 			
 			if (action.equals(Constants.ACTION_SEND_MESSAGE))
 			{
 				int messageType = bundle.getInt(Constants.EXTRA_MESSAGE);
 				updateMessage(messageType);
 			}
+			else if (action.equals(Constants.ACTION_AUTHENTICATE_BUZZ))
+			{
+				String message = intent.getStringExtra(Constants.EXTRA_SMS_MESSAGE);
+				String origin = intent.getStringExtra(Constants.EXTRA_ORIGINATING_ADDRESS);
+				if (isBuzzAuthorized(message))
+				{
+					buzz(true, origin);
+				}				
+			}
 			else if (action.equals(Constants.ACTION_SEND_BUZZ))
 			{
-				sendBuzz(true);
+				sendBuzz();
 			}
 			else if (action.equals(Constants.ACTION_UPDATE_DRUNK_LEVEL))
 			{
 				int drunkLevel = bundle.getInt(Constants.EXTRA_DRUNK_LEVEL);
 				updateDrunkLevel(drunkLevel);
+			}
+			else if (action.equals(Constants.ACTION_UPDATE_SLEEPY_LEVEL))
+			{
+				int sleepyLevel = bundle.getInt(Constants.EXTRA_SLEEPY_LEVEL);
+				updateSleepyLevel(sleepyLevel);
 			}
 			else if (action.equals(Constants.ACTION_UPDATE_MWAH_LEVEL))
 			{
@@ -88,9 +108,10 @@ public class LinkyIntentService extends IntentService
 			else if (action.equals(Constants.ACTION_UPDATE_ALL_LEVELS))
 			{
 				int drunkLevel = bundle.getInt(Constants.EXTRA_DRUNK_LEVEL);
+				int sleepyLevel = bundle.getInt(Constants.EXTRA_SLEEPY_LEVEL);
 				int mwahLevel = bundle.getInt(Constants.EXTRA_MWAH_LEVEL);
 				int huggleLevel = bundle.getInt(Constants.EXTRA_HUGGLE_LEVEL);
-				updateAllLevels(drunkLevel, mwahLevel, huggleLevel);
+				updateAllLevels(drunkLevel, sleepyLevel, mwahLevel, huggleLevel);
 			}
 			else if (action.equals(Constants.ACTION_WIDGET_UPDATE_DRUNK_LEVEL))
 			{
@@ -133,20 +154,20 @@ public class LinkyIntentService extends IntentService
     	sendMessage(mMessage);
     }
     
-    private void updateAllLevels(int drunkLevel, int mwahLevel, int huggleLevel)
+    private void updateAllLevels(int drunkLevel, int sleepyLevel, int mwahLevel, int huggleLevel)
     {
-    	mMessage = "Drunk: " + drunkLevel + "! Mwahs: " + mwahLevel + "! Huggles: " + huggleLevel + "!";
-    	sendMessage(mMessage);;
+    	mMessage = "Drunk: " + drunkLevel + "! Sleepy: " + sleepyLevel + "! Mwahs: " + mwahLevel + "! Huggles: " + huggleLevel + "!";
+    	sendMessage(mMessage);
     }
     
     private void updateMessage(int messageType) 
     {            	
     	switch (messageType)
     	{
-    		case Constants.MESSAGE_POKE: 			mMessage = "*poke*"; 			break;
-    		case Constants.MESSAGE_KISS: 			mMessage = "*mwaaah*"; 			break;
-    		case Constants.MESSAGE_HUG:  			mMessage = "*huggle*"; 			break;
-    		case Constants.MESSAGE_TICKLE: 			mMessage = "*tickle*";			break;
+    		case Constants.MESSAGE_POKE: 			mMessage = "*poke!*"; 			break;
+    		case Constants.MESSAGE_KISS: 			mMessage = "*mwah!*"; 			break;
+    		case Constants.MESSAGE_HUG:  			mMessage = "*huggle!*"; 		break;
+    		case Constants.MESSAGE_TICKLE: 			mMessage = "*tickle!*";			break;
     		case Constants.MESSAGE_HOLDHANDS: 		mMessage = "*holds hands*";		break;    		
     		case Constants.MESSAGE_MISSESYOU: 		mMessage = ":( I miss you.";	break;
     		case Constants.MESSAGE_SMILE_LOW: 		mMessage = ":)";				break;
@@ -154,11 +175,11 @@ public class LinkyIntentService extends IntentService
     		case Constants.MESSAGE_SMILE_HIGH: 		mMessage = "^_^";				break;
     		
     		case Constants.MESSAGE_WIDGET_POKE: 	mMessage = "*poke!* (w)"; 		break;
-    		case Constants.MESSAGE_WIDGET_KISS: 	mMessage = "*mwaaah!* (w)"; 	break;
+    		case Constants.MESSAGE_WIDGET_KISS: 	mMessage = "*mwah!* (w)"; 		break;
     		case Constants.MESSAGE_WIDGET_HUG:  	mMessage = "*huggle!* (w)"; 	break;
     		case Constants.MESSAGE_WIDGET_TICKLE:	mMessage = "*tickle!* (w)";		break;
     		    		
-    		default: 								mMessage = "*poke* from Tiff!";	break;
+    		default: 								mMessage = "*poke!*";			break;
     	}
     	
         sendMessage(mMessage);
@@ -183,17 +204,73 @@ public class LinkyIntentService extends IntentService
         } 
         catch (Exception e) 
         {
-        	String logMessage = "SMS Outgoing failed.";
-            Log.e(TAG, logMessage, e);            
+            Log.e(TAG, "SMS Outgoing failed.", e);            
         } 
     }
     
-    private void sendBuzz(boolean shouldSendBuzz)
+    private boolean isBuzzAuthorized(String message)
     {    
-    	if(shouldSendBuzz)
+    	if (message.contentEquals(Constants.BUZZ_KEY))
     	{
-    		mMessage = "BUZZ!";
-        	sendMessage(mMessage);
+    		return true;
+    	}    	
+    	else
+    	{
+    		return false;
+    	}
+    }
+    
+    private void sendBuzz()
+    {   
+    	try
+    	{
+    		mMessage = Constants.BUZZ_KEY;
+        	PendingIntent pendingIntent = PendingIntent.getService(this, 0, new Intent(this, LinkyIntentService.class), 0);
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(mLinkedNumber, null, mMessage, pendingIntent, null);
+    	}
+    	catch (Exception e)
+    	{
+    		Log.e(TAG, "Buzz Failed.", e);
+    	}    	
+    	        	
+        vibrate();
+        displayToast("BUZZING " + mLinkedNumber + "!");
+    	    	
+    }
+    
+    private void buzz(boolean shouldBuzz, String originNumber)
+    {    
+    	if (shouldBuzz)
+    	{	
+    		/*int dot = 100;      // Length of a Morse Code "dot" in milliseconds
+    		int dash = 250;     // Length of a Morse Code "dash" in milliseconds
+    		int short_gap = 100;    // Length of Gap Between dots/dashes
+    		int medium_gap = 250;   // Length of Gap Between Letters
+    		int long_gap = 500;    // Length of Gap Between Words
+    		long[] pattern = {
+    		    0,  // Start immediately
+    		    dash, medium_gap, 
+    		    dot, short_gap, dot, short_gap, dash, medium_gap, dot, long_gap, 
+    		    dash, short_gap, dash
+    		};*/
+    		
+    		int dot = 50;      // Length of a Morse Code "dot" in milliseconds
+    		int dash = 125;     // Length of a Morse Code "dash" in milliseconds
+    		int short_gap = 50;    // Length of Gap Between dots/dashes
+    		int medium_gap = 125;   // Length of Gap Between Letters
+    		int long_gap = 500;    // Length of Gap Between Words
+    		long[] pattern = {
+    		    0,  // Start immediately
+    		    dash, medium_gap, 
+    		    dot, short_gap, dot, short_gap, dash, medium_gap, dot, long_gap, 
+    		    dash, short_gap, dash
+    		};
+    		
+    		Vibrator vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+    		vibrator.vibrate(pattern, -1);
+    		
+    		displayToast("BUZZ from " + originNumber + "!", Toast.LENGTH_LONG);
     	}    	
     }
     
@@ -202,46 +279,36 @@ public class LinkyIntentService extends IntentService
     	mHandler.post(new DisplayToast(message));
     }
     
+    private void displayToast(String message, int duration)
+    {
+    	mHandler.post(new DisplayToast(message, duration));
+    }
+    
     private void vibrate()
     {
 		Vibrator vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
 		vibrator.vibrate(500);
     }
-
+    
 	private class DisplayToast implements Runnable
 	{
 		  String mText;
+		  int mDuration = Toast.LENGTH_SHORT;
 
 		  public DisplayToast(String text)
 		  {
 			  mText = text;
 		  }
+		  
+		  public DisplayToast(String text, int duration)
+		  {
+			  mText = text;
+			  mDuration = duration;
+		  }
 
 		  public void run()
 		  {
-			  Toast.makeText(LinkyIntentService.this, mText, Toast.LENGTH_SHORT).show();			  
+			  Toast.makeText(LinkyIntentService.this, mText, mDuration).show();
 		  }
-	}
-		
-	private void instapic()
-	{
-//		Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-//	    File photo;
-//	    try
-//	    {
-//	        // place where to store camera taken picture
-//	        photo = this.createTemporaryFile("picture", ".jpg");
-//	        photo.delete();
-//	    }
-//	    catch(Exception e)
-//	    {
-//	        Log.v(TAG, "Can't create file to take picture!");
-//	        //Toast.makeText(mContext, "Please check SD card! Image shot is impossible!", 10000);	        
-//	    }
-//	    mImageUri = Uri.fromFile(photo);
-//	    intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
-//	    
-//	    //start camera intent
-//	    startActivityForResult(this, intent, MenuShootImage);
-	}
+	}	
 }

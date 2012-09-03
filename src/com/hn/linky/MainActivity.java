@@ -1,45 +1,41 @@
 package com.hn.linky;
 
-import java.io.File;
-
 import com.hn.linky.R;
 
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity
 {	
 	private final String TAG = "MainActivity";
-	String mImageUri;
+	private Intent mIntent;	
+	private String mImageUri;
 	
 	private final int MAX_DRUNK_LEVEL = 10;
+	private final int MAX_SLEEPY_LEVEL = 10;
 	private final int MAX_MWAH_LEVEL = 10;
 	private final int MAX_HUGGLE_LEVEL = 10;
-	
-	private Intent mIntent;	
+	private final int mRequestCode = 1;
 	
 	private int mDrunkLevel;	
 	private TextView mDrunkLevelTextView;
 	private SeekBar mDrunkLevelSeekBar;
 	private Button mUpdateDrunkLevelButton;
+	
+	private int mSleepyLevel;	
+	private TextView mSleepyLevelTextView;
+	private SeekBar mSleepyLevelSeekBar;
+	private Button mUpdateSleepyLevelButton;
 
 	private int mMwahLevel;	
 	private TextView mMwahLevelTextView;
@@ -52,10 +48,8 @@ public class MainActivity extends Activity
 	private Button mUpdateHuggleLevelButton;
 	
 	private Button mUpdateAllLevelsButton;
-	
 	private Button mInstapicButton;
-	
-	private int mRequestCode = 1;
+	private Button mBuzzButton;
 	
     public void onCreate(Bundle savedInstanceState)
     {	
@@ -99,6 +93,42 @@ public class MainActivity extends Activity
     	    }  
     	});
     	
+    	
+    	/** Sleepy level **/
+    	mSleepyLevelTextView = (TextView) findViewById(R.id.sleepyLevelTextView);
+    	mSleepyLevelTextView.setText("Sleepy level: 0");    	
+    	
+    	mSleepyLevelSeekBar = (SeekBar) findViewById(R.id.sleepyLevelSeekBar);
+    	mSleepyLevelSeekBar.setMax(MAX_SLEEPY_LEVEL);
+    	mSleepyLevelSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener()
+    	{
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) 
+			{
+				mSleepyLevel = progress;
+				mSleepyLevelTextView.setText("Sleepy Level: " + progress);
+			}
+
+			public void onStartTrackingTouch(SeekBar seekBar) 
+			{			
+				//do nothing
+			}
+
+			public void onStopTrackingTouch(SeekBar seekBar) 
+			{			
+				//do nothing
+			}
+    	});    	
+    	
+    	mUpdateSleepyLevelButton = (Button) findViewById(R.id.updateSleepyLevelButton);
+    	mUpdateSleepyLevelButton.setOnClickListener(new OnClickListener()
+    	{  
+    	    public void onClick(View v) 
+    	    {      	    	
+    	    	mIntent.setAction(Constants.ACTION_UPDATE_SLEEPY_LEVEL);
+				mIntent.putExtra(Constants.EXTRA_SLEEPY_LEVEL, mSleepyLevel);
+				startService(mIntent);
+    	    }  
+    	});
     	
     	
     	/** Mwah level **/
@@ -199,6 +229,7 @@ public class MainActivity extends Activity
     	    {      	    	
     	    	mIntent.setAction(Constants.ACTION_UPDATE_ALL_LEVELS);
     	    	mIntent.putExtra(Constants.EXTRA_DRUNK_LEVEL, mDrunkLevel);
+    	    	mIntent.putExtra(Constants.EXTRA_SLEEPY_LEVEL, mSleepyLevel);
     	    	mIntent.putExtra(Constants.EXTRA_MWAH_LEVEL, mMwahLevel);
 				mIntent.putExtra(Constants.EXTRA_HUGGLE_LEVEL, mHuggleLevel);
 				startService(mIntent);
@@ -223,6 +254,25 @@ public class MainActivity extends Activity
 				}
     	    }  
     	});
+    	
+    	
+    	/** Buzz **/
+    	mBuzzButton = (Button) findViewById(R.id.buzzButton);
+    	mBuzzButton.setOnClickListener(new OnClickListener()
+    	{  
+    	    public void onClick(View v) 
+    	    {      	    	
+    	    	try 
+    	    	{
+        	    	mIntent.setAction(Constants.ACTION_SEND_BUZZ);        	    	
+    				startService(mIntent);
+				} 
+    	    	catch (Exception e) 
+				{
+					Log.e(TAG, "Buzz failed.", e);
+				}
+    	    }  
+    	});
     }
     
 	protected void onStart() 
@@ -241,51 +291,12 @@ public class MainActivity extends Activity
         return super.onKeyDown(keyCode, event);
     }
 	
-	
-//	private void sendInstapic()
-//	{
-//		Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-//	    File photo = null;
-//	    try
-//	    {
-//	        // place where to store camera taken picture
-//	        photo = this.createTemporaryFile("picture", ".jpg");
-//	        photo.delete();
-//	        Log.v(TAG, "Attempting instapic");
-//	    }
-//	    catch(Exception e)
-//	    {
-//	        Log.v(TAG, "Can't create file to take picture!");
-//	        Toast.makeText(mContext, "Please check SD card! Image shot is impossible!", 10000);
-//	    }
-//	    
-//	    mImageUri = Uri.fromFile(photo);	    
-//	    
-//	    intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
-//	    
-//	    //start camera intent
-//	    startActivityForResult(intent, mRequestCode);
-//	}
-	
 	private void sendInstapic()
 	{
 		Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
 	    startActivityForResult(intent, mRequestCode);
 	}
-
-	
-	private File createTemporaryFile(String part, String ext) throws Exception
-	{
-	    File tempDir = Environment.getExternalStorageDirectory();
-	    tempDir = new File(tempDir.getAbsolutePath()+ "/.temp/");
-	    if (!tempDir.exists())
-	    {
-	        tempDir.mkdir();
-	    }
-	    return File.createTempFile(part, ext, tempDir);
-	}
-	
 
 	//called after camera intent finished
 	public void onActivityResult(int requestCode, int resultCode, Intent intent)
@@ -297,7 +308,7 @@ public class MainActivity extends Activity
 	    	sendMMSIntent.putExtra("sms_body", "test mms");
 	    	sendMMSIntent.putExtra(Intent.EXTRA_STREAM, mImageUri); 
 	    	sendMMSIntent.setType("image/png"); 
-//	    	startActivity(sendMMSIntent);
+	    	startActivity(sendMMSIntent);
 	    }
 	    super.onActivityResult(requestCode, resultCode, intent);
 	}

@@ -3,7 +3,6 @@ package com.hn.linky;
 import com.hn.linky.R;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -14,21 +13,19 @@ import android.widget.ImageView;
 
 public class SendMessageActivity extends Activity
 {		
-	private Context mContext = null;
-	private Intent mIntent = null;	
+	private Intent mIntent;	
 	
     public void onCreate(Bundle savedInstanceState)
     {	
-    	super.onCreate(savedInstanceState);
     	setContentView(R.layout.main);
-    	mContext = getApplicationContext();
     	mIntent = new Intent(SendMessageActivity.this, LinkyIntentService.class);
+    	super.onCreate(savedInstanceState);
     }
     
     @Override
 	protected void onStart() 
     {
-    	Intent intent = new Intent(mContext, LinkyIntentService.class);
+    	Intent intent = new Intent(this, LinkyIntentService.class);
     	startService(intent);
 				
 		ImageView imageView = (ImageView) findViewById(R.id.imageView);

@@ -13,30 +13,31 @@ public class SendMessageWidgetProvider extends AppWidgetProvider
 	public static final String POKE_ACTION = "com.hn.linky.POKE_ACTION";
 	public static final String HUG_ACTION = "com.hn.linky.HUG_ACTION";
 	public static final String KISS_ACTION = "com.hn.linky.KISS_ACTION";
-	public static final String TICKLE_ACTION = "com.hn.linky.TICKLE_ACTION";
 	
     @Override
     public void onReceive(Context context, Intent intent) 
     {	
     	Intent newIntent = new Intent(context, LinkyIntentService.class);
-    	newIntent.setAction(Constants.ACTION_SEND_MESSAGE);
     	
     	String action = intent.getAction();
     	if (action.equals(POKE_ACTION))
     	{
+    		newIntent.setAction(Constants.ACTION_SEND_MESSAGE);
     		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_POKE);
     	}
     	else if (action.equals(HUG_ACTION))
     	{
+    		newIntent.setAction(Constants.ACTION_SEND_MESSAGE);
     		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_HUG);
     	}
     	else if (action.equals(KISS_ACTION))
     	{
+    		newIntent.setAction(Constants.ACTION_SEND_MESSAGE);
     		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_KISS);
     	}
-    	else if (action.equals(TICKLE_ACTION))
+    	else if (action.equals(Constants.ACTION_SEND_BUZZ))
     	{
-    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_TICKLE);
+    		newIntent.setAction(Constants.ACTION_SEND_BUZZ);
     	} 	
     	
         context.startService(newIntent);
@@ -66,11 +67,11 @@ public class SendMessageWidgetProvider extends AppWidgetProvider
         PendingIntent kissPendingIntent = PendingIntent.getBroadcast(context, 0, kissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.button3, kissPendingIntent);
         
-        /** tickleButton intent **/
-        Intent tickleIntent = new Intent(context, SendMessageWidgetProvider.class);
-        tickleIntent.setAction(TICKLE_ACTION);        
-        PendingIntent ticklePendingIntent = PendingIntent.getBroadcast(context, 0, tickleIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.button4, ticklePendingIntent);      
+        /** buzzButton intent **/
+        Intent buzzIntent = new Intent(context, SendMessageWidgetProvider.class);
+        buzzIntent.setAction(Constants.ACTION_SEND_BUZZ);        
+        PendingIntent buzzPendingIntent = PendingIntent.getBroadcast(context, 0, buzzIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.button4, buzzPendingIntent);      
         
         ComponentName thisWidget = new ComponentName(context, SendMessageWidgetProvider.class);
         AppWidgetManager manager = AppWidgetManager.getInstance(context);        
