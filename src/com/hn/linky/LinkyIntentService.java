@@ -25,7 +25,7 @@ public class LinkyIntentService extends IntentService
 	private String mLinkedNumber;	
 	private Handler mHandler;	
 	private String mMessage;
-	private Uri mImageUri;
+	//private Uri mImageUri;
 	
 	public LinkyIntentService() 
 	{
@@ -243,23 +243,11 @@ public class LinkyIntentService extends IntentService
     {    
     	if (shouldBuzz)
     	{	
-    		/*int dot = 100;      // Length of a Morse Code "dot" in milliseconds
-    		int dash = 250;     // Length of a Morse Code "dash" in milliseconds
-    		int short_gap = 100;    // Length of Gap Between dots/dashes
-    		int medium_gap = 250;   // Length of Gap Between Letters
-    		int long_gap = 500;    // Length of Gap Between Words
-    		long[] pattern = {
-    		    0,  // Start immediately
-    		    dash, medium_gap, 
-    		    dot, short_gap, dot, short_gap, dash, medium_gap, dot, long_gap, 
-    		    dash, short_gap, dash
-    		};*/
-    		
-    		int dot = 50;      // Length of a Morse Code "dot" in milliseconds
-    		int dash = 125;     // Length of a Morse Code "dash" in milliseconds
-    		int short_gap = 50;    // Length of Gap Between dots/dashes
-    		int medium_gap = 125;   // Length of Gap Between Letters
-    		int long_gap = 500;    // Length of Gap Between Words
+    		int dot = 50;      
+    		int dash = 125;     
+    		int short_gap = 50;
+    		int medium_gap = 125;
+    		int long_gap = 500;
     		long[] pattern = {
     		    0,  // Start immediately
     		    dash, medium_gap, 
@@ -274,6 +262,12 @@ public class LinkyIntentService extends IntentService
     	}    	
     }
     
+    private void vibrate()
+    {
+		Vibrator vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+		vibrator.vibrate(500);
+    }
+    
     private void displayToast(String message)
     {
     	mHandler.post(new DisplayToast(message));
@@ -283,13 +277,7 @@ public class LinkyIntentService extends IntentService
     {
     	mHandler.post(new DisplayToast(message, duration));
     }
-    
-    private void vibrate()
-    {
-		Vibrator vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-		vibrator.vibrate(500);
-    }
-    
+        
 	private class DisplayToast implements Runnable
 	{
 		  String mText;

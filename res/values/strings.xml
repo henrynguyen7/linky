@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="versionName">1.0.5</string>
+    <!-- Linky App strings -->
+    <string name="versionName">1.0.6</string>
     <string name="appName">Linky</string>
+    
+    <!-- PasswordForm strings -->
+    <string name="passwordFormDescriptionTextViewText">Please enter phone number to link me to!</string>
+    <string name="passwordFormUnlockButtonText">Linky</string>
+    
+    <!-- MainActivity strings -->
+    <string name="mainActivityDrunkLevelTextViewText">drunkTextView</string>
+    <string name="mainActivityUpdateDrunkLevelButtonText">Update</string>
+    <string name="mainActivitySleepyLevelTextViewText">sleepyTextView</string>
+    <string name="mainActivityUpdateSleepyLevelButtonText">Update</string>
+    <string name="mainActivityMwahLevelTextViewText">mwahTextView</string>
+    <string name="mainActivityUpdateMwahLevelButtonText">Send Kiss</string>
+    <string name="mainActivityHuggleLevelTextViewText">huggleTextView</string>
+    <string name="mainActivityUpdateHuggleLevelButtonText">Send Hug</string>      
+    <string name="mainActivityUpdateAllLevelsButtonText">Update ALL!!</string>
+    <string name="mainActivityInstapicButtonText">Instapic!</string>
+    <string name="mainActivityBuzzButtonText">BUZZ!</string>
+    
 </resources>
