@@ -1,4 +1,4 @@
-package com.hn.linky;
+package com.hn.linky.utilities;
 
 public class Constants 
 {

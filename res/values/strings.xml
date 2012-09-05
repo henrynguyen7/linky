@@ -5,8 +5,8 @@
     <string name="appName">Linky</string>
     
     <!-- PasswordForm strings -->
-    <string name="passwordFormDescriptionTextViewText">Please enter phone number to link me to!</string>
-    <string name="passwordFormUnlockButtonText">Linky</string>
+    <string name="passwordFormDescriptionTextViewText">Please enter phone number to link me to.</string>
+    <string name="passwordFormUnlockButtonText">Link Me!</string>
     
     <!-- MainActivity strings -->
     <string name="mainActivityDrunkLevelTextViewText">drunkTextView</string>

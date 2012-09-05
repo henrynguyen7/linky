@@ -1,6 +1,7 @@
-package com.hn.linky;
+package com.hn.linky.activities;
 
 import com.hn.linky.R;
+import com.hn.linky.utilities.Constants;
 
 import android.app.Activity;
 import android.content.Intent;

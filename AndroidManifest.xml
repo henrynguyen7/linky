@@ -21,7 +21,7 @@
 	    android:label="@string/appName">
 	        
 	    <activity 
-	        android:name=".InputLinkedNumberActivity" 
+	        android:name=".activities.InputLinkedNumberActivity" 
 	        android:label="@string/appName" 
 	        android:icon="@drawable/ic_menu_link" 
 	        android:launchMode="singleTop" 
@@ -34,7 +34,7 @@
 	    </activity>
 	    	    
 	    <activity 
-	        android:name=".MainActivity" 
+	        android:name=".activities.MainActivity" 
 	        android:icon="@drawable/ic_menu_link" 
 	        android:launchMode="singleTop" 
 	        android:allowTaskReparenting="true" 
@@ -42,7 +42,7 @@
 	    </activity>
 	    
         <receiver 
-            android:name=".SendMessageWidgetProvider" 
+            android:name=".widgets.SendMessageWidgetProvider" 
             android:label="LinkySendMessageWidget"
             android:exported="false">
             <intent-filter>
@@ -55,7 +55,7 @@
         </receiver>
                 
         <receiver 
-            android:name=".SmsReceiver" 
+            android:name=".utilities.SmsReceiver" 
             android:enabled="true" 
             android:exported="false">
       		<intent-filter android:priority="999">

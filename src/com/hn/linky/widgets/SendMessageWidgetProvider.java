@@ -1,4 +1,8 @@
-package com.hn.linky;
+package com.hn.linky.widgets;
+
+import com.hn.linky.LinkyIntentService;
+import com.hn.linky.R;
+import com.hn.linky.utilities.Constants;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;

@@ -1,4 +1,6 @@
-package com.hn.linky;
+package com.hn.linky.utilities;
+
+import com.hn.linky.LinkyIntentService;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
