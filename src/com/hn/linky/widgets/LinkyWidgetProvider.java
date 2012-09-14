@@ -12,7 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-public class SendMessageWidgetProvider extends AppWidgetProvider 
+public class LinkyWidgetProvider extends AppWidgetProvider 
 {
 	public static final String POKE_ACTION = "com.hn.linky.POKE_ACTION";
 	public static final String HUG_ACTION = "com.hn.linky.HUG_ACTION";
@@ -51,33 +51,33 @@ public class SendMessageWidgetProvider extends AppWidgetProvider
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) 
 	{        
-		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.send_message_widget);   
+		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget);   
         
         /** pokeButton intent **/
-        Intent pokeIntent = new Intent(context, SendMessageWidgetProvider.class);
+        Intent pokeIntent = new Intent(context, LinkyWidgetProvider.class);
         pokeIntent.setAction(POKE_ACTION);        
         PendingIntent pokePendingIntent = PendingIntent.getBroadcast(context, 0, pokeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.button1, pokePendingIntent);
         
         /** hugButton intent **/
-        Intent hugIntent = new Intent(context, SendMessageWidgetProvider.class);
+        Intent hugIntent = new Intent(context, LinkyWidgetProvider.class);
         hugIntent.setAction(HUG_ACTION);        
         PendingIntent hugPendingIntent = PendingIntent.getBroadcast(context, 0, hugIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.button2, hugPendingIntent);
         
         /** kissButton intent **/
-        Intent kissIntent = new Intent(context, SendMessageWidgetProvider.class);
+        Intent kissIntent = new Intent(context, LinkyWidgetProvider.class);
         kissIntent.setAction(KISS_ACTION);        
         PendingIntent kissPendingIntent = PendingIntent.getBroadcast(context, 0, kissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.button3, kissPendingIntent);
         
         /** buzzButton intent **/
-        Intent buzzIntent = new Intent(context, SendMessageWidgetProvider.class);
+        Intent buzzIntent = new Intent(context, LinkyWidgetProvider.class);
         buzzIntent.setAction(Constants.ACTION_SEND_BUZZ);        
         PendingIntent buzzPendingIntent = PendingIntent.getBroadcast(context, 0, buzzIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.button4, buzzPendingIntent);      
         
-        ComponentName thisWidget = new ComponentName(context, SendMessageWidgetProvider.class);
+        ComponentName thisWidget = new ComponentName(context, LinkyWidgetProvider.class);
         AppWidgetManager manager = AppWidgetManager.getInstance(context);        
         manager.updateAppWidget(thisWidget, remoteViews); 
 		

@@ -21,4 +21,26 @@
     <string name="mainActivityInstapicButtonText">Instapic!</string>
     <string name="mainActivityBuzzButtonText">BUZZ!</string>
     
+    <!-- Menu strings -->
+    <string name="menuSettingsLabel">Settings</string>
+    <string name="menuHelpLabel">Help</string>
+    
+    <!-- SettingsActivity strings -->    
+    <string name="pref_sync">pref_sync</string>
+    <string name="pref_sync_summ">pref_sync_summ</string>
+    <string name="pref_syncConnectionType">pref_syncConnectionType</string>
+    <string name="pref_syncConnectionTypes_default">pref_syncConnectionTypes_default</string>
+    
+    <array name="pref_syncConnectionTypes_entries">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </array>
+    
+    <array name="pref_syncConnectionTypes_values">
+        <item>v1</item>
+        <item>v2</item>
+        <item>v3</item>
+    </array>
+    
 </resources>

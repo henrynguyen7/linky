@@ -19,7 +19,7 @@ public class SendMessageActivity extends Activity
 	
     public void onCreate(Bundle savedInstanceState)
     {	
-    	setContentView(R.layout.main);
+    	setContentView(R.layout.send_message_activity);
     	mIntent = new Intent(SendMessageActivity.this, LinkyIntentService.class);
     	super.onCreate(savedInstanceState);
     }

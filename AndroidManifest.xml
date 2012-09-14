@@ -40,10 +40,15 @@
 	        android:allowTaskReparenting="true" 
 	        android:label="@string/appName">       
 	    </activity>
+		
+	    <activity
+        	android:name=".activities.SettingsActivity"
+        	android:label="SettingsActivity">
+		</activity>
 	    
         <receiver 
-            android:name=".widgets.SendMessageWidgetProvider" 
-            android:label="LinkySendMessageWidget"
+            android:name=".widgets.LinkyWidgetProvider" 
+            android:label="Linky Quick Messages"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -51,7 +56,7 @@
             </intent-filter>
             <meta-data 
                 android:name="android.appwidget.provider" 
-                android:resource="@xml/send_message_widget_provider" />
+                android:resource="@xml/widget_provider" />
         </receiver>
                 
         <receiver 
