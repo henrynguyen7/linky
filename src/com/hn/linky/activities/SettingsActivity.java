@@ -1,7 +1,6 @@
 package com.hn.linky.activities;
 
 import com.hn.linky.R;
-import com.hn.linky.valueobjects.Constants;
 import com.hn.linky.valueobjects.ISharedPreferences;
 
 import android.content.SharedPreferences;
