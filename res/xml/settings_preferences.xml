@@ -4,6 +4,7 @@
     <EditTextPreference
         android:key="linkedNumber"
         android:title="Linked Number"
-        android:icon="@drawable/ic_menu_link"
+        android:icon="@drawable/ic_menu_link" 
+        android:inputType="number"
         android:persistent="true" />
 </PreferenceScreen>

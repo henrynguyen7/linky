@@ -1,11 +1,7 @@
 package com.hn.linky.valueobjects;
 
 public class Constants
-{
-	public static final String SHARED_PREF_LINKED_NUMBER = "linkedNumber";
-	public static final String SHARED_PREF_SOURCE_NUMBER = "sourceNumber";
-	public static final String SHARED_PREF_IS_LOGGED_IN = "isLoggedIn";
-	
+{	
 	public static final String ACTION_SEND_MESSAGE = "com.hn.linky.action.SEND_MESSAGE";
 	public static final String ACTION_SEND_BUZZ = "com.hn.linky.action.SEND_BUZZ";
 	public static final String ACTION_AUTHENTICATE_BUZZ = "com.hn.linky.action.AUTHENTICATE_BUZZ";

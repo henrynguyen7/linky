@@ -84,9 +84,6 @@ public final class R {
         public static final int options=0x7f080000;
     }
     public static final class string {
-        /**  SharedPreferences 
-         */
-        public static final int SHARED_PREF_LINKED_NUMBER=0x7f060012;
         public static final int appName=0x7f060001;
         public static final int mainActivityBuzzButtonText=0x7f06000f;
         /**  MainActivity strings 

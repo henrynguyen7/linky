@@ -18,8 +18,9 @@ import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
 import com.hn.linky.valueobjects.Constants;
+import com.hn.linky.valueobjects.ISharedPreferences;
 
-public class LinkyIntentService extends IntentService
+public class LinkyIntentService extends IntentService implements ISharedPreferences
 {
 	public static final String TAG = "LinkyIntentService";
 	
@@ -49,14 +50,14 @@ public class LinkyIntentService extends IntentService
 	private String getLinkedNumber()
     {
     	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-    	return sharedPreferences.getString(Constants.SHARED_PREF_LINKED_NUMBER, null);
+    	return sharedPreferences.getString(SHARED_PREF_LINKED_NUMBER, null);
     }
 	
 	private void setSourceNumber(String phoneNumber)
     {
     	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     	SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putString(Constants.SHARED_PREF_SOURCE_NUMBER, phoneNumber);
+		editor.putString(SHARED_PREF_SOURCE_NUMBER, phoneNumber);
 		editor.commit();	
     }
 		

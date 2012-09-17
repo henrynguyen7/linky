@@ -1,7 +1,7 @@
 package com.hn.linky.activities;
 
 import com.hn.linky.R;
-import com.hn.linky.valueobjects.Constants;
+import com.hn.linky.valueobjects.ISharedPreferences;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,13 +13,13 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class InputLinkedNumberActivity extends Activity
+public class InputLinkedNumberActivity extends Activity implements ISharedPreferences
 {	
     public void onCreate(Bundle savedInstanceState)
-    {    
-    	super.onCreate(savedInstanceState);
+    {   
+    	super.onCreate(savedInstanceState);    	
     	
-    	if (isLoggedIn())
+    	if (isLinked())
     	{	
     		logIn();
     	}
@@ -34,7 +34,6 @@ public class InputLinkedNumberActivity extends Activity
         	{  
         	    public void onClick(View v) 
         	    {  
-        	    	saveLoggedInStatus(true);
         	    	String phoneNumber = linkedNumberEditText.getText().toString();        	    	
         	    	saveLinkedNumber(phoneNumber);
         	    	logIn();
@@ -43,10 +42,17 @@ public class InputLinkedNumberActivity extends Activity
     	}
     }
         
-    private boolean isLoggedIn()
+    private boolean isLinked()
     {
     	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-    	return sharedPreferences.getBoolean(Constants.SHARED_PREF_IS_LOGGED_IN, false);
+    	if (sharedPreferences.getString(SHARED_PREF_LINKED_NUMBER, null) == null)
+    	{
+    		return false;
+    	}
+    	else 
+    	{
+    		return true;
+    	}
     }
     
     private void logIn()
@@ -56,19 +62,11 @@ public class InputLinkedNumberActivity extends Activity
 		finish();	
     }
     
-    private void saveLoggedInStatus(boolean status)
-    {
-    	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-    	SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putBoolean(Constants.SHARED_PREF_IS_LOGGED_IN, status);
-		editor.commit();		
-    }
-    
     private void saveLinkedNumber(String phoneNumber)
     {
     	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     	SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putString(Constants.SHARED_PREF_LINKED_NUMBER, phoneNumber);
+		editor.putString(SHARED_PREF_LINKED_NUMBER, phoneNumber);
 		editor.commit();
     }
 }

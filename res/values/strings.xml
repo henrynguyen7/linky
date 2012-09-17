@@ -26,8 +26,4 @@
     <string name="menuSettingsLabel">Settings</string>
     <string name="menuHelpLabel">Help</string>
     
-    <!-- SharedPreferences -->    
-    <string name="SHARED_PREF_LINKED_NUMBER">linkedNumber</string>
-    
-    
 </resources>

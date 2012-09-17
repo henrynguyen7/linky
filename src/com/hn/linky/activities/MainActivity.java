@@ -73,7 +73,8 @@ public class MainActivity extends Activity
 	    switch (item.getItemId()) 
 	    {
 	        case R.id.menuSettings:
-	            showSettings();
+	        	Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+	    		startActivity(intent);
 	            return true;
 	        case R.id.menuHelp:
 	            showHelp();
@@ -81,12 +82,6 @@ public class MainActivity extends Activity
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
-	}
-	
-	private void showSettings()
-	{
-		Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-		startActivity(intent);
 	}
 	
 	private void showHelp()
