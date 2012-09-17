@@ -1,6 +1,6 @@
-package com.hn.linky.utilities;
+package com.hn.linky.valueobjects;
 
-public class Constants 
+public class Constants
 {
 	public static final String SHARED_PREF_LINKED_NUMBER = "linkedNumber";
 	public static final String SHARED_PREF_SOURCE_NUMBER = "sourceNumber";

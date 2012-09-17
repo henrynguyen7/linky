@@ -7,6 +7,7 @@
     <!-- PasswordForm strings -->
     <string name="passwordFormDescriptionTextViewText">Please enter phone number to link me to.</string>
     <string name="passwordFormUnlockButtonText">Link Me!</string>
+    <string name="passwordFormExampleText">ex. 7145551234</string>
     
     <!-- MainActivity strings -->
     <string name="mainActivityDrunkLevelTextViewText">drunkTextView</string>
@@ -25,22 +26,8 @@
     <string name="menuSettingsLabel">Settings</string>
     <string name="menuHelpLabel">Help</string>
     
-    <!-- SettingsActivity strings -->    
-    <string name="pref_sync">pref_sync</string>
-    <string name="pref_sync_summ">pref_sync_summ</string>
-    <string name="pref_syncConnectionType">pref_syncConnectionType</string>
-    <string name="pref_syncConnectionTypes_default">pref_syncConnectionTypes_default</string>
+    <!-- SharedPreferences -->    
+    <string name="SHARED_PREF_LINKED_NUMBER">linkedNumber</string>
     
-    <array name="pref_syncConnectionTypes_entries">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </array>
-    
-    <array name="pref_syncConnectionTypes_values">
-        <item>v1</item>
-        <item>v2</item>
-        <item>v3</item>
-    </array>
     
 </resources>

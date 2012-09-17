@@ -17,7 +17,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
-import com.hn.linky.utilities.Constants;
+import com.hn.linky.valueobjects.Constants;
 
 public class LinkyIntentService extends IntentService
 {
@@ -126,7 +126,7 @@ public class LinkyIntentService extends IntentService
 			}
 			else if (action.equals(Constants.ACTION_INSTAPIC))
 			{
-				
+				//TODO implement Instapic
 			}
 		}
 	}
