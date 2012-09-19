@@ -40,8 +40,9 @@ public class SmsReceiver extends BroadcastReceiver
                 if (message.contains(Constants.BUZZ_KEY))
                 {
                 	Log.i(TAG, "Sms message contains: " + Constants.BUZZ_KEY);
-                	
-                	abortBroadcast();
+
+                	//TODO implement linky buzz counter so we can safely abort broadcast 
+                	//abortBroadcast();
                 	
                 	origin = messages[i].getOriginatingAddress();
                 	
