@@ -8,15 +8,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 public class SmsReceiver extends BroadcastReceiver
-{
-	private final String stringToCompare = "LINKY BUZZ!";
+{	
+	private static final String TAG = "SMS_RECEIVER";
 	
-	@Override
-	public void onReceive(Context context, Intent intent) 
-    {	
-		//Get the SMS message passed in
+    @Override
+    public void onReceive(Context context, Intent intent)
+    {
+    	Log.i(TAG, "Intent recieved: " + intent.getAction());
+    	
+    	//Get the SMS message passed in
         Bundle bundle = intent.getExtras();        
         SmsMessage[] messages = null;
         String message = null;
@@ -34,8 +37,10 @@ public class SmsReceiver extends BroadcastReceiver
                 
                 message = messages[i].getMessageBody().toString();                
                 
-                if (message.contains(stringToCompare))
+                if (message.contains(Constants.BUZZ_KEY))
                 {
+                	Log.i(TAG, "Sms message contains: " + Constants.BUZZ_KEY);
+                	
                 	abortBroadcast();
                 	
                 	origin = messages[i].getOriginatingAddress();
@@ -45,11 +50,7 @@ public class SmsReceiver extends BroadcastReceiver
                 	authenticateIntent.putExtra(Constants.EXTRA_SMS_MESSAGE, message);
                 	authenticateIntent.putExtra(Constants.EXTRA_ORIGINATING_ADDRESS, origin);
                 	context.startService(authenticateIntent);
-                }
-                
-                // str += "SMS from " + messages[i].getOriginatingAddress();
-                // str += messages[i].getMessageBody().toString();
-                        
+                }       
             }
         }
     }

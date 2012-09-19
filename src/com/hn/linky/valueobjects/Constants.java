@@ -10,8 +10,6 @@ public class Constants
 	public static final String ACTION_UPDATE_MWAH_LEVEL = "com.hn.linky.action.UPDATE_MWAH_LEVEL";
 	public static final String ACTION_UPDATE_HUGGLE_LEVEL = "com.hn.linky.action.UPDATE_HUGGLE_LEVEL";		
 	public static final String ACTION_UPDATE_ALL_LEVELS = "com.hn.linky.action.UPDATE_ALL_LEVELS";
-	public static final String ACTION_WIDGET_UPDATE_DRUNK_LEVEL = "com.hn.linky.action.WIDGET_UPDATE_DRUNK_LEVEL";	
-	public static final String ACTION_WIDGET_UPDATE_SLEEPY_LEVEL = "com.hn.linky.action.WIDGET_UPDATE_SLEEPY_LEVEL";
 	public static final String ACTION_INSTAPIC = "com.hn.linky.action.INSTAPIC";
 	
 	public static final String EXTRA_MESSAGE = "messageType";
@@ -37,4 +35,8 @@ public class Constants
 	public static final int MESSAGE_WIDGET_KISS = 10;
 	public static final int MESSAGE_WIDGET_HUG = 11;
 	public static final int MESSAGE_WIDGET_TICKLE = 12;
+		
+	public static final String ACTION_SEND_WIDGET_POKE = "com.hn.linky.action.WIDGET_POKE";
+	public static final String ACTION_SEND_WIDGET_HUGGLE = "com.hn.linky.action.WIDGET_HUGGLE";
+	public static final String ACTION_SEND_WIDGET_MWAH = "com.hn.linky.action.WIDGET_MWAH";
 }

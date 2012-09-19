@@ -13,32 +13,32 @@
         android:focusable="true" >
 
         <Button
-            android:id="@+id/button1"
-            android:layout_width="65dp"
+            android:id="@+id/pokeWidgetButton"
+            android:layout_width="@dimen/widget_button_size"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|center_horizontal"
-            android:text="Poke!" />
+            android:layout_gravity="center|center_horizontal"            
+            android:text="@string/pokeWidgetButtonText" />
 
         <Button
-            android:id="@+id/button2"
-            android:layout_width="65dp"
+            android:id="@+id/huggleWidgetButton"
+            android:layout_width="@dimen/widget_button_size"
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_horizontal"
-            android:text="Hug!" />
+            android:text="@string/huggleWidgetButtonText" />
 
         <Button
-            android:id="@+id/button3"
-            android:layout_width="65dp"
+            android:id="@+id/mwahWidgetButton"
+            android:layout_width="@dimen/widget_button_size"
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_horizontal"
-            android:text="Kiss!" />
-
+            android:text="@string/mwahWidgetButtonText" />
+
         <Button
-            android:id="@+id/button4"
-            android:layout_width="65dp"
+            android:id="@+id/buzzWidgetButton"
+            android:layout_width="@dimen/widget_button_size"
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_horizontal"
-            android:text="BUZZ!" />
+            android:text="@string/buzzWidgetButtonText" />
 
     </LinearLayout>
 

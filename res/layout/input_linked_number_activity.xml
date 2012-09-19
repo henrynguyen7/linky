@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/passwordFormDescriptionTextViewText" />
+        android:text="@string/linkedNumberDescriptionText" />
 
     <EditText
         android:id="@+id/passwordText"
@@ -22,19 +22,19 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:gravity="center_vertical|center"
-        android:hint="@string/passwordFormExampleText"
+        android:hint="@string/linkedNumberExampleText"
         android:inputType="phone|textPassword" >
 
         <requestFocus />
     </EditText>
 
     <Button
-        android:id="@+id/unlockButton"
+        android:id="@+id/submitButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/passwordFormUnlockButtonText" />
+        android:text="@string/submitLinkedNumberButtonText" />
 
     <TextView
         android:id="@+id/versionNameTextView"

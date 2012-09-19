@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
     <!-- Linky App strings -->
     <string name="versionName">1.0.7</string>
     <string name="appName">Linky</string>
     
-    <!-- PasswordForm strings -->
-    <string name="passwordFormDescriptionTextViewText">Please enter phone number to link me to.</string>
-    <string name="passwordFormUnlockButtonText">Link Me!</string>
-    <string name="passwordFormExampleText">ex. 7145551234</string>
+    <!-- InputLinkedNumberActivity strings -->
+    <string name="linkedNumberDescriptionText">Please enter phone number to link me to.</string>
+    <string name="submitLinkedNumberButtonText">Link Me!</string>
+    <string name="linkedNumberExampleText">ex. 7145551234</string>
     
-    <!-- MainActivity strings -->
-    <string name="mainActivityDrunkLevelTextViewText">drunkTextView</string>
-    <string name="mainActivityUpdateDrunkLevelButtonText">Update</string>
-    <string name="mainActivitySleepyLevelTextViewText">sleepyTextView</string>
-    <string name="mainActivityUpdateSleepyLevelButtonText">Update</string>
-    <string name="mainActivityMwahLevelTextViewText">mwahTextView</string>
-    <string name="mainActivityUpdateMwahLevelButtonText">Send Kiss</string>
-    <string name="mainActivityHuggleLevelTextViewText">huggleTextView</string>
-    <string name="mainActivityUpdateHuggleLevelButtonText">Send Hug</string>      
-    <string name="mainActivityUpdateAllLevelsButtonText">Update ALL!!</string>
-    <string name="mainActivityInstapicButtonText">Instapic!</string>
-    <string name="mainActivityBuzzButtonText">BUZZ!</string>
+    <!-- MainActivity strings -->    
+    <string name="drunkLevelMax">10</string>
+    <string name="drunkLevelText">Drunk Level: 0</string>
+    <string name="updateDrunkLevelButtonText">Update</string>
+    
+    <string name="sleepyLevelMax">10</string>
+    <string name="sleepyLevelText">Sleepy level: 0</string>
+    <string name="updateSleepyLevelButtonText">Update</string>
+    
+    <string name="mwahLevelMax">10</string>
+    <string name="mwahLevelText">Mwah!</string>
+    <string name="updateMwahLevelButtonText">Send Kiss</string>
+    
+    <string name="huggleLevelMax">10</string>
+    <string name="huggleLevelText">Huggle!</string>
+    <string name="updateHuggleLevelButtonText">Send Hug</string>
+          
+    <string name="updateAllLevelsButtonText">Update ALL!!</string>
+    <string name="instapicButtonText">Instapic!</string>
+    <string name="buzzButtonText">BUZZ!</string>
     
     <!-- Menu strings -->
     <string name="menuSettingsLabel">Settings</string>
     <string name="menuHelpLabel">Help</string>
+    
+    <!-- Widget strings -->
+    <string name="pokeWidgetButtonText">Poke</string>
+    <string name="huggleWidgetButtonText">Hug</string>
+    <string name="mwahWidgetButtonText">Mwah</string>
+    <string name="buzzWidgetButtonText">BUZZ</string>
     
 </resources>

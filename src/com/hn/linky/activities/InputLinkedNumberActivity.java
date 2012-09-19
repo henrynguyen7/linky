@@ -15,21 +15,28 @@ import android.widget.EditText;
 
 public class InputLinkedNumberActivity extends Activity implements ISharedPreferences
 {	
+	@Override
     public void onCreate(Bundle savedInstanceState)
     {   
-    	super.onCreate(savedInstanceState);    	
-    	
-    	if (isLinked())
+    	super.onCreate(savedInstanceState);
+    }
+        
+    @Override
+	protected void onStart() 
+    {
+		super.onStart();
+		
+		if (isLinked())
     	{	
     		logIn();
     	}
     	else
     	{
-        	setContentView(R.layout.passwordform);
+        	setContentView(R.layout.input_linked_number_activity);
         	
         	final EditText linkedNumberEditText = (EditText) findViewById(R.id.passwordText);
         	
-        	Button submitButton = (Button) findViewById(R.id.unlockButton);
+        	Button submitButton = (Button) findViewById(R.id.submitButton);
         	submitButton.setOnClickListener(new OnClickListener()
         	{  
         	    public void onClick(View v) 
@@ -40,9 +47,9 @@ public class InputLinkedNumberActivity extends Activity implements ISharedPrefer
         	    }  
         	});
     	}
-    }
-        
-    private boolean isLinked()
+	}
+
+	private boolean isLinked()
     {
     	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
     	if (sharedPreferences.getString(SHARED_PREF_LINKED_NUMBER, null) == null)

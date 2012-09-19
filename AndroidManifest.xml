@@ -52,7 +52,11 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="ACTION_WIDGET_SEND_MESSAGE"/>
+                <action android:name="ACTION_SEND_WIDGET_POKE"/>
+                <action android:name="ACTION_SEND_WIDGET_HUGGLE"/>
+                <action android:name="ACTION_SEND_WIDGET_MWAH"/>
+                <action android:name="ACTION_SEND_BUZZ"/>
+                <action android:name="ACTION_AUTHENTICATE_BUZZ"/>
             </intent-filter>
             <meta-data 
                 android:name="android.appwidget.provider" 
@@ -61,8 +65,7 @@
                 
         <receiver 
             android:name=".utilities.SmsReceiver" 
-            android:enabled="true" 
-            android:exported="false">
+            android:enabled="true" >
       		<intent-filter android:priority="999">
         		<action android:name="android.provider.Telephony.SMS_RECEIVED" />
       		</intent-filter>      		

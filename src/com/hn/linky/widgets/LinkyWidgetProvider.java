@@ -13,39 +13,32 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 public class LinkyWidgetProvider extends AppWidgetProvider 
-{
-	public static final String POKE_ACTION = "com.hn.linky.POKE_ACTION";
-	public static final String HUG_ACTION = "com.hn.linky.HUG_ACTION";
-	public static final String KISS_ACTION = "com.hn.linky.KISS_ACTION";
-	
+{	
     @Override
     public void onReceive(Context context, Intent intent) 
     {	
+    	super.onReceive(context, intent);
     	Intent newIntent = new Intent(context, LinkyIntentService.class);
     	
     	String action = intent.getAction();
-    	if (action.equals(POKE_ACTION))
+    	if (action.equals(Constants.ACTION_SEND_WIDGET_POKE))
     	{
-    		newIntent.setAction(Constants.ACTION_SEND_MESSAGE);
-    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_POKE);
+    		newIntent.setAction(Constants.ACTION_SEND_WIDGET_POKE);    		
     	}
-    	else if (action.equals(HUG_ACTION))
+    	else if (action.equals(Constants.ACTION_SEND_WIDGET_HUGGLE))
     	{
-    		newIntent.setAction(Constants.ACTION_SEND_MESSAGE);
-    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_HUG);
+    		newIntent.setAction(Constants.ACTION_SEND_WIDGET_HUGGLE);    		
     	}
-    	else if (action.equals(KISS_ACTION))
+    	else if (action.equals(Constants.ACTION_SEND_WIDGET_MWAH))
     	{
-    		newIntent.setAction(Constants.ACTION_SEND_MESSAGE);
-    		newIntent.putExtra(Constants.EXTRA_MESSAGE, Constants.MESSAGE_WIDGET_KISS);
+    		newIntent.setAction(Constants.ACTION_SEND_WIDGET_MWAH);
     	}
     	else if (action.equals(Constants.ACTION_SEND_BUZZ))
     	{
     		newIntent.setAction(Constants.ACTION_SEND_BUZZ);
     	} 	
     	
-        context.startService(newIntent);
-        super.onReceive(context, intent);   
+        context.startService(newIntent);           
     }
     
 	@Override
@@ -53,29 +46,29 @@ public class LinkyWidgetProvider extends AppWidgetProvider
 	{        
 		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget);   
         
-        /** pokeButton intent **/
+        /** pokeWidgetButton intent **/
         Intent pokeIntent = new Intent(context, LinkyWidgetProvider.class);
-        pokeIntent.setAction(POKE_ACTION);        
+        pokeIntent.setAction(Constants.ACTION_SEND_WIDGET_POKE);        
         PendingIntent pokePendingIntent = PendingIntent.getBroadcast(context, 0, pokeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.button1, pokePendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.pokeWidgetButton, pokePendingIntent);
         
-        /** hugButton intent **/
+        /** huggleWidgetButton intent **/
         Intent hugIntent = new Intent(context, LinkyWidgetProvider.class);
-        hugIntent.setAction(HUG_ACTION);        
+        hugIntent.setAction(Constants.ACTION_SEND_WIDGET_HUGGLE);        
         PendingIntent hugPendingIntent = PendingIntent.getBroadcast(context, 0, hugIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.button2, hugPendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.huggleWidgetButton, hugPendingIntent);
         
-        /** kissButton intent **/
+        /** mwahWidgetButton intent **/
         Intent kissIntent = new Intent(context, LinkyWidgetProvider.class);
-        kissIntent.setAction(KISS_ACTION);        
+        kissIntent.setAction(Constants.ACTION_SEND_WIDGET_MWAH);        
         PendingIntent kissPendingIntent = PendingIntent.getBroadcast(context, 0, kissIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.button3, kissPendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.mwahWidgetButton, kissPendingIntent);
         
-        /** buzzButton intent **/
+        /** buzzWidgetButton intent **/
         Intent buzzIntent = new Intent(context, LinkyWidgetProvider.class);
         buzzIntent.setAction(Constants.ACTION_SEND_BUZZ);        
         PendingIntent buzzPendingIntent = PendingIntent.getBroadcast(context, 0, buzzIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.button4, buzzPendingIntent);      
+        remoteViews.setOnClickPendingIntent(R.id.buzzWidgetButton, buzzPendingIntent);      
         
         ComponentName thisWidget = new ComponentName(context, LinkyWidgetProvider.class);
         AppWidgetManager manager = AppWidgetManager.getInstance(context);        

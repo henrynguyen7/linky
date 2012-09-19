@@ -19,11 +19,14 @@
 		    android:layout_height="wrap_content"
 		    android:layout_margin="@dimen/general_margin"
 		    android:orientation="vertical" >
+
 		    <SeekBar
 		        android:id="@+id/drunkLevelSeekBar"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="1" />
+		        android:layout_weight="1"
+		        android:max="@string/drunkLevelMax" />
+
 		    <RelativeLayout
 		        android:id="@+id/drunkLevelRelativeLayout"
 		        android:layout_width="wrap_content"
@@ -35,13 +38,16 @@
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:layout_alignParentLeft="true"
-		            android:text="@string/mainActivityDrunkLevelTextViewText" />
+		            android:text="@string/drunkLevelText" />
+
 		        <Button
 		            android:id="@+id/updateDrunkLevelButton"
 		            android:layout_width="@dimen/button_size"
 		            android:layout_height="wrap_content"
 		            android:layout_alignParentRight="true"
-		            android:text="@string/mainActivityUpdateDrunkLevelButtonText" />
+		            android:onClick="updateDrunkLevelButton"
+		            android:text="@string/updateDrunkLevelButtonText" />
+
 		    </RelativeLayout>
 		</LinearLayout>
 	
@@ -55,7 +61,8 @@
 		        android:id="@+id/sleepyLevelSeekBar"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="1" />
+		        android:layout_weight="1"
+		        android:max="@string/sleepyLevelMax" />
 		    <RelativeLayout
 		        android:id="@+id/sleepyLevelRelativeLayout"
 		        android:layout_width="wrap_content"
@@ -67,13 +74,14 @@
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:layout_alignParentLeft="true"
-		            android:text="@string/mainActivitySleepyLevelTextViewText" />
+		            android:text="@string/sleepyLevelText" />
 		        <Button
 		            android:id="@+id/updateSleepyLevelButton"
 		            android:layout_width="@dimen/button_size"
 		            android:layout_height="wrap_content"
 		            android:layout_alignParentRight="true"
-		            android:text="@string/mainActivityUpdateSleepyLevelButtonText" />
+		            android:onClick="updateSleepyLevelButton"
+		            android:text="@string/updateSleepyLevelButtonText" />
 		    </RelativeLayout>
 		</LinearLayout>	
 		<LinearLayout
@@ -85,7 +93,8 @@
 		        android:id="@+id/mwahLevelSeekBar"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="1" />
+		        android:layout_weight="1"
+		        android:max="@string/mwahLevelMax" />
 		    <RelativeLayout
 		        android:id="@+id/mwahButtonsRelativeLayout"
 		        android:layout_width="wrap_content"
@@ -97,13 +106,14 @@
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:layout_alignParentLeft="true"
-		            android:text="@string/mainActivityMwahLevelTextViewText" />
+		            android:text="@string/mwahLevelText" />
 		        <Button
 		            android:id="@+id/updateMwahLevelButton"
 		            android:layout_width="@dimen/button_size"
 		            android:layout_height="wrap_content"
 		            android:layout_alignParentRight="true"
-		            android:text="@string/mainActivityUpdateMwahLevelButtonText" />
+		            android:onClick="updateMwahLevelButton"
+		            android:text="@string/updateMwahLevelButtonText" />
 		    </RelativeLayout>
 		</LinearLayout>
 	
@@ -117,7 +127,8 @@
 		        android:id="@+id/huggleLevelSeekBar"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_weight="1" />
+		        android:layout_weight="1"
+		        android:max="@string/huggleLevelMax" />
 		    <RelativeLayout
 		        android:id="@+id/huggleLevelRelativeLayout"
 		        android:layout_width="wrap_content"
@@ -129,13 +140,14 @@
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:layout_alignParentLeft="true"
-		            android:text="@string/mainActivityHuggleLevelTextViewText" />
+		            android:text="@string/huggleLevelText" />
 		        <Button
 		            android:id="@+id/updateHuggleLevelButton"
 		            android:layout_width="@dimen/button_size"
 		            android:layout_height="wrap_content"
 		            android:layout_alignParentRight="true"
-		            android:text="@string/mainActivityUpdateHuggleLevelButtonText" />
+		            android:onClick="updateSleepyLevelButton"
+		            android:text="@string/updateHuggleLevelButtonText" />
 		    </RelativeLayout>
 		</LinearLayout>
 	
@@ -145,7 +157,8 @@
 		    android:layout_height="wrap_content"
 		    android:layout_marginLeft="@dimen/general_margin"
 		    android:layout_marginRight="@dimen/general_margin"
-		    android:text="@string/mainActivityUpdateAllLevelsButtonText" />
+		    android:onClick="updateAllLevelsButton"
+		    android:text="@string/updateAllLevelsButtonText" />
 		
 		<Button
 		    android:id="@+id/instapicButton"
@@ -153,7 +166,8 @@
 		    android:layout_height="wrap_content"
 		    android:layout_marginLeft="@dimen/general_margin"
 		    android:layout_marginRight="@dimen/general_margin"
-		    android:text="@string/mainActivityInstapicButtonText" />
+		    android:onClick="instapicButton"
+		    android:text="@string/instapicButtonText" />
 	
 		<Button
 		    android:id="@+id/buzzButton"
@@ -161,7 +175,8 @@
 		    android:layout_height="wrap_content"
 		    android:layout_marginLeft="@dimen/general_margin"
 		    android:layout_marginRight="@dimen/general_margin"
-		    android:text="@string/mainActivityBuzzButtonText" />
+		    android:onClick="buzzButton"
+		    android:text="@string/buzzButtonText" />
 		
 	</LinearLayout>
 	

@@ -7,8 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.telephony.SmsManager;
@@ -24,16 +24,17 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
 {
 	public static final String TAG = "LinkyIntentService";
 	
+	private final IBinder mBinder = new LocalBinder<LinkyIntentService>(this);
+	private final int VIBRATION_DURATION = 500;
 	private String mLinkedNumber;	
 	private Handler mHandler;	
-	private String mMessage;
-	//private Uri mImageUri;
-	
+	private String mMessage;	
+		
 	public LinkyIntentService() 
 	{
 		super("LinkyIntentService");		
-	}
-	
+	}	
+
 	@Override
 	public void onCreate() 
 	{	
@@ -47,6 +48,106 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
 		BugSenseHandler.setup(this, "abc580a4");
 	}	
 	
+	@Override
+	public IBinder onBind(Intent intent) 
+	{
+		//return super.onBind(intent);
+		//return new LocalBinder<LinkyIntentService>(this);
+		return mBinder;
+	}
+	
+    public void updateDrunkLevel(int drunkLevel)
+    {
+    	mMessage = "Drunk Level: " + drunkLevel + "!";
+    	sendMessage(mMessage);
+    }
+    
+    public void updateSleepyLevel(int sleepyLevel)
+    {
+    	mMessage = "Sleepy Level: " + sleepyLevel + "!";
+    	sendMessage(mMessage);
+    }
+    
+    public void updateMwahLevel(int mwahLevel)
+    {
+    	mMessage = "Mwah Level: " + mwahLevel + "!";
+    	sendMessage(mMessage);
+    }
+    
+    public void updateHuggleLevel(int huggleLevel)
+    {
+    	mMessage = "Huggle Level: " + huggleLevel + "!";
+    	sendMessage(mMessage);
+    }
+    
+    public void updateAllLevels(int drunkLevel, int sleepyLevel, int mwahLevel, int huggleLevel)
+    {
+    	mMessage = "Drunk: " + drunkLevel + "! Sleepy: " + sleepyLevel + "! Mwahs: " + mwahLevel + "! Huggles: " + huggleLevel + "!";
+    	sendMessage(mMessage);
+    }
+    
+    public void instapic()
+    {
+    	//TODO implement instapic
+    }
+    
+    public void sendBuzz()
+    {   
+    	try
+    	{
+    		mMessage = Constants.BUZZ_KEY;
+        	PendingIntent pendingIntent = PendingIntent.getService(this, 0, new Intent(this, LinkyIntentService.class), 0);
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(mLinkedNumber, null, mMessage, pendingIntent, null);
+    	}
+    	catch (Exception e)
+    	{
+    		Log.e(TAG, "Buzz Failed.", e);
+    	}    	
+    	        	
+        vibrate();
+        displayToast("BUZZING " + mLinkedNumber + "!");
+    	    	
+    }    
+	
+	@Override
+	protected void onHandleIntent(Intent intent) 
+	{
+		if (intent.getAction() != null)
+		{
+			String action = intent.getAction();
+
+			if (action.equals(Constants.ACTION_SEND_WIDGET_POKE))
+			{
+				mMessage = "*poke!* (w)";
+		    	sendMessage(mMessage);
+			}
+			else if (action.equals(Constants.ACTION_SEND_WIDGET_HUGGLE))
+			{
+				mMessage = "*huggle!* (w)";
+		    	sendMessage(mMessage);
+			}
+			else if (action.equals(Constants.ACTION_SEND_WIDGET_MWAH))
+			{
+				mMessage = "*mwah!* (w)";
+		    	sendMessage(mMessage);
+			}
+			else if (action.equals(Constants.ACTION_SEND_BUZZ))
+			{
+				sendBuzz();
+			}
+			else if (action.equals(Constants.ACTION_AUTHENTICATE_BUZZ))
+			{
+				String message = intent.getStringExtra(Constants.EXTRA_SMS_MESSAGE);
+				String origin = intent.getStringExtra(Constants.EXTRA_ORIGINATING_ADDRESS);
+				if (isBuzzAuthorized(message))
+				{
+					buzzSelf(true, origin);
+				}				
+			}
+		}
+	}
+    
 	private String getLinkedNumber()
     {
     	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -59,132 +160,6 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
     	SharedPreferences.Editor editor = sharedPreferences.edit();
 		editor.putString(SHARED_PREF_SOURCE_NUMBER, phoneNumber);
 		editor.commit();	
-    }
-		
-	@Override
-	protected void onHandleIntent(Intent intent) 
-	{
-		if (intent.getExtras() != null || intent.getAction() != null)
-		{
-			String action = intent.getAction();
-			Bundle bundle = intent.getExtras();
-			
-			if (action.equals(Constants.ACTION_SEND_MESSAGE))
-			{
-				int messageType = bundle.getInt(Constants.EXTRA_MESSAGE);
-				updateMessage(messageType);
-			}
-			else if (action.equals(Constants.ACTION_AUTHENTICATE_BUZZ))
-			{
-				String message = intent.getStringExtra(Constants.EXTRA_SMS_MESSAGE);
-				String origin = intent.getStringExtra(Constants.EXTRA_ORIGINATING_ADDRESS);
-				if (isBuzzAuthorized(message))
-				{
-					buzz(true, origin);
-				}				
-			}
-			else if (action.equals(Constants.ACTION_SEND_BUZZ))
-			{
-				sendBuzz();
-			}
-			else if (action.equals(Constants.ACTION_UPDATE_DRUNK_LEVEL))
-			{
-				int drunkLevel = bundle.getInt(Constants.EXTRA_DRUNK_LEVEL);
-				updateDrunkLevel(drunkLevel);
-			}
-			else if (action.equals(Constants.ACTION_UPDATE_SLEEPY_LEVEL))
-			{
-				int sleepyLevel = bundle.getInt(Constants.EXTRA_SLEEPY_LEVEL);
-				updateSleepyLevel(sleepyLevel);
-			}
-			else if (action.equals(Constants.ACTION_UPDATE_MWAH_LEVEL))
-			{
-				int mwahLevel = bundle.getInt(Constants.EXTRA_MWAH_LEVEL);
-				updateMwahLevel(mwahLevel);
-			}			
-			else if (action.equals(Constants.ACTION_UPDATE_HUGGLE_LEVEL))
-			{
-				int huggleLevel = bundle.getInt(Constants.EXTRA_HUGGLE_LEVEL);
-				updateHuggleLevel(huggleLevel);
-			}
-			else if (action.equals(Constants.ACTION_UPDATE_ALL_LEVELS))
-			{
-				int drunkLevel = bundle.getInt(Constants.EXTRA_DRUNK_LEVEL);
-				int sleepyLevel = bundle.getInt(Constants.EXTRA_SLEEPY_LEVEL);
-				int mwahLevel = bundle.getInt(Constants.EXTRA_MWAH_LEVEL);
-				int huggleLevel = bundle.getInt(Constants.EXTRA_HUGGLE_LEVEL);
-				updateAllLevels(drunkLevel, sleepyLevel, mwahLevel, huggleLevel);
-			}
-			else if (action.equals(Constants.ACTION_WIDGET_UPDATE_DRUNK_LEVEL))
-			{
-				int drunkLevel = bundle.getInt(Constants.EXTRA_DRUNK_LEVEL);
-				updateDrunkLevel(drunkLevel);
-			}
-			else if (action.equals(Constants.ACTION_WIDGET_UPDATE_SLEEPY_LEVEL))
-			{
-				int sleepyLevel = bundle.getInt(Constants.EXTRA_SLEEPY_LEVEL);
-				updateSleepyLevel(sleepyLevel);
-			}
-			else if (action.equals(Constants.ACTION_INSTAPIC))
-			{
-				//TODO implement Instapic
-			}
-		}
-	}
-	
-    private void updateDrunkLevel(int drunkLevel)
-    {
-    	mMessage = "Drunk Level: " + drunkLevel + "!";
-    	sendMessage(mMessage);
-    }
-    
-    private void updateMwahLevel(int mwahLevel)
-    {
-    	mMessage = "Mwah Level: " + mwahLevel + "!";
-    	sendMessage(mMessage);
-    }
-    
-    private void updateHuggleLevel(int huggleLevel)
-    {
-    	mMessage = "Huggle Level: " + huggleLevel + "!";
-    	sendMessage(mMessage);
-    }
-        
-    private void updateSleepyLevel(int sleepyLevel)
-    {
-    	mMessage = "Sleepy Level: " + sleepyLevel + "!";
-    	sendMessage(mMessage);
-    }
-    
-    private void updateAllLevels(int drunkLevel, int sleepyLevel, int mwahLevel, int huggleLevel)
-    {
-    	mMessage = "Drunk: " + drunkLevel + "! Sleepy: " + sleepyLevel + "! Mwahs: " + mwahLevel + "! Huggles: " + huggleLevel + "!";
-    	sendMessage(mMessage);
-    }
-    
-    private void updateMessage(int messageType) 
-    {            	
-    	switch (messageType)
-    	{
-    		case Constants.MESSAGE_POKE: 			mMessage = "*poke!*"; 			break;
-    		case Constants.MESSAGE_KISS: 			mMessage = "*mwah!*"; 			break;
-    		case Constants.MESSAGE_HUG:  			mMessage = "*huggle!*"; 		break;
-    		case Constants.MESSAGE_TICKLE: 			mMessage = "*tickle!*";			break;
-    		case Constants.MESSAGE_HOLDHANDS: 		mMessage = "*holds hands*";		break;    		
-    		case Constants.MESSAGE_MISSESYOU: 		mMessage = ":( I miss you.";	break;
-    		case Constants.MESSAGE_SMILE_LOW: 		mMessage = ":)";				break;
-    		case Constants.MESSAGE_SMILE_MEDIUM:	mMessage = ":D";				break;
-    		case Constants.MESSAGE_SMILE_HIGH: 		mMessage = "^_^";				break;
-    		
-    		case Constants.MESSAGE_WIDGET_POKE: 	mMessage = "*poke!* (w)"; 		break;
-    		case Constants.MESSAGE_WIDGET_KISS: 	mMessage = "*mwah!* (w)"; 		break;
-    		case Constants.MESSAGE_WIDGET_HUG:  	mMessage = "*huggle!* (w)"; 	break;
-    		case Constants.MESSAGE_WIDGET_TICKLE:	mMessage = "*tickle!* (w)";		break;
-    		    		
-    		default: 								mMessage = "*poke!*";			break;
-    	}
-    	
-        sendMessage(mMessage);
     }
     
     private void sendMessage(String message)
@@ -221,27 +196,8 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
     		return false;
     	}
     }
-    
-    private void sendBuzz()
-    {   
-    	try
-    	{
-    		mMessage = Constants.BUZZ_KEY;
-        	PendingIntent pendingIntent = PendingIntent.getService(this, 0, new Intent(this, LinkyIntentService.class), 0);
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(mLinkedNumber, null, mMessage, pendingIntent, null);
-    	}
-    	catch (Exception e)
-    	{
-    		Log.e(TAG, "Buzz Failed.", e);
-    	}    	
-    	        	
-        vibrate();
-        displayToast("BUZZING " + mLinkedNumber + "!");
-    	    	
-    }
-    
-    private void buzz(boolean shouldBuzz, String originNumber)
+
+    private void buzzSelf(boolean shouldBuzz, String originNumber)
     {    
     	if (shouldBuzz)
     	{	
@@ -267,7 +223,7 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
     private void vibrate()
     {
 		Vibrator vibrator = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-		vibrator.vibrate(500);
+		vibrator.vibrate(VIBRATION_DURATION);
     }
     
     private void displayToast(String message)
@@ -300,5 +256,5 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
 		  {
 			  Toast.makeText(LinkyIntentService.this, mText, mDuration).show();
 		  }
-	}	
+	}
 }
