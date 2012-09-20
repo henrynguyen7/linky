@@ -207,7 +207,7 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
     		int medium_gap = 125;
     		int long_gap = 500;
     		long[] pattern = {
-    		    0,  // Start immediately
+    		    2000,  // Start immediately
     		    dash, medium_gap, 
     		    dot, short_gap, dot, short_gap, dash, medium_gap, dot, long_gap, 
     		    dash, short_gap, dash
