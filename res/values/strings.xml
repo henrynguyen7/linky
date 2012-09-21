@@ -2,7 +2,7 @@
 <resources>
     
     <!-- Linky App strings -->
-    <string name="versionName">1.0.9</string>
+    <string name="versionName">1.0.10</string>
     <string name="appName">Linky</string>
     
     <!-- InputLinkedNumberActivity strings -->

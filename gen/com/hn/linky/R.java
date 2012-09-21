@@ -44,7 +44,7 @@ public final class R {
         public static final int huggleLevelTextView=0x7f09001c;
         public static final int huggleWidgetButton=0x7f09002e;
         public static final int imageView=0x7f09001e;
-        public static final int instapicButton=0x7f090008;
+        public static final int instapicButton=0x7f090007;
         public static final int kissButton=0x7f090022;
         public static final int linearLayout=0x7f090000;
         public static final int linearLayout1=0x7f09001f;
@@ -72,7 +72,7 @@ public final class R {
         public static final int smileMediumButton=0x7f090029;
         public static final int submitButton=0x7f090003;
         public static final int tickleButton=0x7f090024;
-        public static final int updateAllLevelsButton=0x7f090007;
+        public static final int updateAllLevelsButton=0x7f090008;
         public static final int updateDrunkLevelButton=0x7f09000e;
         public static final int updateHuggleLevelButton=0x7f09001d;
         public static final int updateMwahLevelButton=0x7f090018;
