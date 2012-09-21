@@ -39,4 +39,6 @@ public class Constants
 	public static final String ACTION_SEND_WIDGET_POKE = "com.hn.linky.action.WIDGET_POKE";
 	public static final String ACTION_SEND_WIDGET_HUGGLE = "com.hn.linky.action.WIDGET_HUGGLE";
 	public static final String ACTION_SEND_WIDGET_MWAH = "com.hn.linky.action.WIDGET_MWAH";
+	
+	public static final int INSTAPIC_REQUEST_CODE = 13;
 }

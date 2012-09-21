@@ -1,23 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-      android:id="@+id/mainActivityScrollView"
-      android:layout_width="wrap_content"
-      android:layout_height="fill_parent" >
+    android:id="@+id/mainActivityScrollView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top" >
       
 	<LinearLayout
 	    xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:id="@+id/mainActivityLinearLayout1"
-	    android:layout_width="fill_parent"
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:gravity="center"
+	    android:layout_gravity="top"
+	    android:baselineAligned="false"
+	    android:gravity="center|fill_vertical"
 	    android:orientation="vertical"
 	    android:weightSum="1" >
-	    
+
+		<LinearLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="0dp"
+		    android:layout_marginBottom="@dimen/main_activity_widget_margin_bottom"
+		    android:layout_marginTop="@dimen/main_activity_widget_margin_top"
+		    android:layout_weight="1" >
+
+			<Button
+			    android:id="@+id/instapicButton"
+			    android:layout_width="@dimen/button_size"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="2dp"
+			    android:layout_marginRight="2dp"
+			    android:onClick="instapicButton"
+			    android:text="@string/instapicButtonText" />
+
+		    <Button
+		        android:id="@+id/updateAllLevelsButton"
+		        android:layout_width="@dimen/button_size"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="2dp"
+		        android:layout_marginRight="2dp"
+		        android:onClick="updateAllLevelsButton"
+		        android:text="@string/updateAllLevelsButtonText" />
+
+		    <Button
+		        android:id="@+id/buzzButton"
+		        android:layout_width="@dimen/button_size"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="2dp"
+		        android:layout_marginRight="2dp"
+		        android:onClick="buzzButton"
+		        android:text="@string/buzzButtonText" />
+
+		</LinearLayout>
+	    
 		<LinearLayout
 		    android:id="@+id/drunkLevelLinearLayout"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:layout_margin="@dimen/general_margin"
+		    android:layout_marginTop="@dimen/main_activity_widget_margin_top"
+		    android:layout_marginLeft="@dimen/main_activity_widget_margin_left"		    
+		    android:layout_marginRight="@dimen/main_activity_widget_margin_right"
+		    android:layout_marginBottom="@dimen/main_activity_widget_margin_bottom"
 		    android:orientation="vertical" >
 
 		    <SeekBar
@@ -31,7 +73,7 @@
 		        android:id="@+id/drunkLevelRelativeLayout"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dp"
+		        android:layout_marginTop="@dimen/main_activity_widget_margin"
 		        android:layout_weight="1" >
 		        <TextView
 		            android:id="@+id/drunkLevelTextView"
@@ -55,7 +97,10 @@
 		    android:id="@+id/sleepyLevelLinearLayout"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:layout_margin="@dimen/general_margin"
+		    android:layout_marginTop="@dimen/main_activity_widget_margin_top"
+		    android:layout_marginLeft="@dimen/main_activity_widget_margin_left"		    
+		    android:layout_marginRight="@dimen/main_activity_widget_margin_right"
+		    android:layout_marginBottom="@dimen/main_activity_widget_margin_bottom"
 		    android:orientation="vertical" >
 		    <SeekBar
 		        android:id="@+id/sleepyLevelSeekBar"
@@ -67,7 +112,7 @@
 		        android:id="@+id/sleepyLevelRelativeLayout"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dp"
+		        android:layout_marginTop="@dimen/main_activity_widget_margin"
 		        android:layout_weight="1" >
 		        <TextView
 		            android:id="@+id/sleepyLevelTextView"
@@ -88,7 +133,10 @@
 		    android:id="@+id/mwahLevelLinearLayout"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:layout_margin="@dimen/general_margin"
+		    android:layout_marginTop="@dimen/main_activity_widget_margin_top"
+		    android:layout_marginLeft="@dimen/main_activity_widget_margin_left"		    
+		    android:layout_marginRight="@dimen/main_activity_widget_margin_right"
+		    android:layout_marginBottom="@dimen/main_activity_widget_margin_bottom"
 		    android:orientation="vertical" >			<SeekBar
 		        android:id="@+id/mwahLevelSeekBar"
 		        android:layout_width="fill_parent"
@@ -99,7 +147,7 @@
 		        android:id="@+id/mwahButtonsRelativeLayout"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dp"
+		        android:layout_marginTop="@dimen/main_activity_widget_margin"
 		        android:layout_weight="1" >
 		        <TextView
 		            android:id="@+id/mwahLevelTextView"
@@ -121,7 +169,10 @@
 		    android:id="@+id/huggleLevelLinearLayout"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:layout_margin="@dimen/general_margin"
+		    android:layout_marginTop="@dimen/main_activity_widget_margin_top"
+		    android:layout_marginLeft="@dimen/main_activity_widget_margin_left"		    
+		    android:layout_marginRight="@dimen/main_activity_widget_margin_right"
+		    android:layout_marginBottom="@dimen/main_activity_widget_margin_bottom"
 		    android:orientation="vertical" >
 		    <SeekBar
 		        android:id="@+id/huggleLevelSeekBar"
@@ -133,7 +184,7 @@
 		        android:id="@+id/huggleLevelRelativeLayout"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dp"
+		        android:layout_marginTop="@dimen/main_activity_widget_margin"
 		        android:layout_weight="1" >
 		        <TextView
 		            android:id="@+id/huggleLevelTextView"
@@ -149,34 +200,8 @@
 		            android:onClick="updateSleepyLevelButton"
 		            android:text="@string/updateHuggleLevelButtonText" />
 		    </RelativeLayout>
+
 		</LinearLayout>
-	
-		<Button
-		    android:id="@+id/updateAllLevelsButton"
-		    android:layout_width="@dimen/button_size"
-		    android:layout_height="wrap_content"
-		    android:layout_marginLeft="@dimen/general_margin"
-		    android:layout_marginRight="@dimen/general_margin"
-		    android:onClick="updateAllLevelsButton"
-		    android:text="@string/updateAllLevelsButtonText" />
-		
-		<Button
-		    android:id="@+id/instapicButton"
-		    android:layout_width="@dimen/button_size"
-		    android:layout_height="wrap_content"
-		    android:layout_marginLeft="@dimen/general_margin"
-		    android:layout_marginRight="@dimen/general_margin"
-		    android:onClick="instapicButton"
-		    android:text="@string/instapicButtonText" />
-	
-		<Button
-		    android:id="@+id/buzzButton"
-		    android:layout_width="@dimen/button_size"
-		    android:layout_height="wrap_content"
-		    android:layout_marginLeft="@dimen/general_margin"
-		    android:layout_marginRight="@dimen/general_margin"
-		    android:onClick="buzzButton"
-		    android:text="@string/buzzButtonText" />
 		
 	</LinearLayout>
 	

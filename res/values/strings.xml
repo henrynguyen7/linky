@@ -27,7 +27,7 @@
     <string name="huggleLevelText">Huggle!</string>
     <string name="updateHuggleLevelButtonText">Send Hug</string>
           
-    <string name="updateAllLevelsButtonText">Update ALL!!</string>
+    <string name="updateAllLevelsButtonText">Update!</string>
     <string name="instapicButtonText">Instapic!</string>
     <string name="buzzButtonText">BUZZ!</string>
     
@@ -36,7 +36,7 @@
     <string name="menuHelpLabel">Help</string>
     
     <!-- Widget strings -->
-    <string name="pokeWidgetButtonText">Poke</string>
+    <string name="pokeWidgetButtonText">iPic</string>
     <string name="huggleWidgetButtonText">Hug</string>
     <string name="mwahWidgetButtonText">Mwah</string>
     <string name="buzzWidgetButtonText">BUZZ</string>

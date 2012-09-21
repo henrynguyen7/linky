@@ -1,9 +1,16 @@
 package com.hn.linky.activities;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.hn.linky.LinkyIntentService;
 import com.hn.linky.LocalBinder;
 import com.hn.linky.R;
+import com.hn.linky.valueobjects.Constants;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -11,15 +18,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity
 {	
@@ -70,6 +84,20 @@ public class MainActivity extends Activity
 	public void onStart()
 	{
 		super.onStart();
+		
+		Intent receivedIntent = getIntent();
+		if (receivedIntent.getBooleanExtra("shouldStartInstapic", false) == true)
+		{
+		    try
+            {
+                dispatchTakePictureIntent();
+            }
+            catch(IOException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+		}
 		
 		// Bind to LinkyIntentService
 		Intent intent = new Intent(this, LinkyIntentService.class);
@@ -263,9 +291,84 @@ public class MainActivity extends Activity
 	
 	public void instapicButton(final View view)
 	{
-		mService.instapic();
+	    try
+        {
+            dispatchTakePictureIntent();
+        }
+        catch(IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	    
+		// mService.instapic();
 	}
 	
+	private Uri instapticUri;
+	
+	private void dispatchTakePictureIntent() throws IOException 
+	{
+	    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+	    Uri fileUri = getOutputMediaFileUri();
+	    instapticUri = fileUri; //Saved locally so it can be broadcast to gallery app for saving onActivityResult
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);        
+        startActivityForResult(takePictureIntent, Constants.INSTAPIC_REQUEST_CODE);
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) 
+	{
+	    if (requestCode == Constants.INSTAPIC_REQUEST_CODE) 
+	    {
+	        if (resultCode == RESULT_OK) 
+	        {
+	            // Image captured and saved to fileUri specified in the Intent
+                mService.sendInstapic(instapticUri);
+	            Toast.makeText(this, "Instapic saved and ready to send!", Toast.LENGTH_LONG).show();
+	        } 
+	        else if (resultCode == RESULT_CANCELED) 
+	        {
+	            this.finish();
+	        } 
+	        else 
+	        {
+	            // Image capture failed, advise user
+	        }
+	    }
+	}
+
+	/** Create a file Uri for saving an image or video */
+	private static Uri getOutputMediaFileUri()
+	{
+	      return Uri.fromFile(getOutputMediaFile());
+	}
+
+	/** Create a File for saving an image or video */
+	@SuppressLint({ "NewApi", "NewApi", "NewApi" })
+	private static File getOutputMediaFile()
+	{
+	    File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+	              Environment.DIRECTORY_PICTURES), "Linky");
+
+	    // Create the storage directory if it does not exist
+	    if (! mediaStorageDir.exists())
+	    {
+	        if (! mediaStorageDir.mkdirs())
+	        {
+	            Log.d("Linky", "failed to create directory");
+	            return null;
+	        }
+	    }
+
+	    // Create a media file name
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_"+ timeStamp + ".jpg");
+
+	    return mediaFile;
+	}
+
+
 	public void buzzButton(final View view)
 	{
 		mService.sendBuzz();

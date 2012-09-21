@@ -3,6 +3,12 @@
     <dimen name="general_margin">25dp</dimen>
     <dimen name="button_size">100dp</dimen> 
     
+    <dimen name="main_activity_widget_margin">10dp</dimen>
+    <dimen name="main_activity_widget_margin_top">14dp</dimen>
+    <dimen name="main_activity_widget_margin_left">25dp</dimen>
+    <dimen name="main_activity_widget_margin_right">25dp</dimen>
+    <dimen name="main_activity_widget_margin_bottom">12dp</dimen>
+    
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_button_size">75dp</dimen>
 </resources>

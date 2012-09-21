@@ -1,16 +1,28 @@
 package com.hn.linky;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
+import android.provider.MediaStore.Images.Media;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -25,7 +37,7 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
 	public static final String TAG = "LinkyIntentService";
 	
 	private final IBinder mBinder = new LocalBinder<LinkyIntentService>(this);
-	private final int VIBRATION_DURATION = 500;
+	private final int VIBRATION_DURATION = 250;
 	private String mLinkedNumber;	
 	private Handler mHandler;	
 	private String mMessage;	
@@ -86,10 +98,7 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
     	sendMessage(mMessage);
     }
     
-    public void instapic()
-    {
-    	//TODO implement instapic
-    }
+    
     
     public void sendBuzz()
     {   
@@ -257,4 +266,24 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
 			  Toast.makeText(LinkyIntentService.this, mText, mDuration).show();
 		  }
 	}
+	
+	public void sendInstapic(Uri instapicUri)
+    {
+	    Intent intent = new Intent(Intent.ACTION_SEND); 
+	    intent.putExtra("address", mLinkedNumber);
+        intent.putExtra("sms_body", "Linky Instapic!");
+        intent.putExtra(Intent.EXTRA_STREAM, instapicUri); 
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setType("image/png"); 
+        startActivity(intent);
+        
+        addPicToGallery(instapicUri);
+    }
+	
+    private void addPicToGallery(Uri uri) 
+    {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        mediaScanIntent.setData(uri);
+        this.sendBroadcast(mediaScanIntent);
+    }
 }

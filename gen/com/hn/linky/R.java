@@ -13,8 +13,13 @@ public final class R {
     public static final class dimen {
         public static final int button_size=0x7f050001;
         public static final int general_margin=0x7f050000;
-        public static final int widget_button_size=0x7f050003;
-        public static final int widget_margin=0x7f050002;
+        public static final int main_activity_widget_margin=0x7f050002;
+        public static final int main_activity_widget_margin_bottom=0x7f050006;
+        public static final int main_activity_widget_margin_left=0x7f050004;
+        public static final int main_activity_widget_margin_right=0x7f050005;
+        public static final int main_activity_widget_margin_top=0x7f050003;
+        public static final int widget_button_size=0x7f050008;
+        public static final int widget_margin=0x7f050007;
     }
     public static final class drawable {
         public static final int background_cropped=0x7f020000;
@@ -24,22 +29,22 @@ public final class R {
     }
     public static final class id {
         public static final int VerticalLayout=0x7f09002b;
-        public static final int buzzButton=0x7f09001d;
+        public static final int buzzButton=0x7f090009;
         public static final int buzzWidgetButton=0x7f090030;
         public static final int descriptionTextView=0x7f090001;
-        public static final int drunkLevelLinearLayout=0x7f090007;
-        public static final int drunkLevelRelativeLayout=0x7f090009;
-        public static final int drunkLevelSeekBar=0x7f090008;
-        public static final int drunkLevelTextView=0x7f09000a;
+        public static final int drunkLevelLinearLayout=0x7f09000a;
+        public static final int drunkLevelRelativeLayout=0x7f09000c;
+        public static final int drunkLevelSeekBar=0x7f09000b;
+        public static final int drunkLevelTextView=0x7f09000d;
         public static final int holdHandsButton=0x7f090025;
         public static final int hugButton=0x7f090021;
-        public static final int huggleLevelLinearLayout=0x7f090016;
-        public static final int huggleLevelRelativeLayout=0x7f090018;
-        public static final int huggleLevelSeekBar=0x7f090017;
-        public static final int huggleLevelTextView=0x7f090019;
+        public static final int huggleLevelLinearLayout=0x7f090019;
+        public static final int huggleLevelRelativeLayout=0x7f09001b;
+        public static final int huggleLevelSeekBar=0x7f09001a;
+        public static final int huggleLevelTextView=0x7f09001c;
         public static final int huggleWidgetButton=0x7f09002e;
         public static final int imageView=0x7f09001e;
-        public static final int instapicButton=0x7f09001c;
+        public static final int instapicButton=0x7f090008;
         public static final int kissButton=0x7f090022;
         public static final int linearLayout=0x7f090000;
         public static final int linearLayout1=0x7f09001f;
@@ -50,28 +55,28 @@ public final class R {
         public static final int menuHelp=0x7f090032;
         public static final int menuSettings=0x7f090031;
         public static final int missYouButton=0x7f090026;
-        public static final int mwahButtonsRelativeLayout=0x7f090013;
-        public static final int mwahLevelLinearLayout=0x7f090011;
-        public static final int mwahLevelSeekBar=0x7f090012;
-        public static final int mwahLevelTextView=0x7f090014;
+        public static final int mwahButtonsRelativeLayout=0x7f090016;
+        public static final int mwahLevelLinearLayout=0x7f090014;
+        public static final int mwahLevelSeekBar=0x7f090015;
+        public static final int mwahLevelTextView=0x7f090017;
         public static final int mwahWidgetButton=0x7f09002f;
         public static final int passwordText=0x7f090002;
         public static final int pokeButton=0x7f090020;
         public static final int pokeWidgetButton=0x7f09002d;
-        public static final int sleepyLevelLinearLayout=0x7f09000c;
-        public static final int sleepyLevelRelativeLayout=0x7f09000e;
-        public static final int sleepyLevelSeekBar=0x7f09000d;
-        public static final int sleepyLevelTextView=0x7f09000f;
+        public static final int sleepyLevelLinearLayout=0x7f09000f;
+        public static final int sleepyLevelRelativeLayout=0x7f090011;
+        public static final int sleepyLevelSeekBar=0x7f090010;
+        public static final int sleepyLevelTextView=0x7f090012;
         public static final int smileHighButton=0x7f09002a;
         public static final int smileLowButton=0x7f090028;
         public static final int smileMediumButton=0x7f090029;
         public static final int submitButton=0x7f090003;
         public static final int tickleButton=0x7f090024;
-        public static final int updateAllLevelsButton=0x7f09001b;
-        public static final int updateDrunkLevelButton=0x7f09000b;
-        public static final int updateHuggleLevelButton=0x7f09001a;
-        public static final int updateMwahLevelButton=0x7f090015;
-        public static final int updateSleepyLevelButton=0x7f090010;
+        public static final int updateAllLevelsButton=0x7f090007;
+        public static final int updateDrunkLevelButton=0x7f09000e;
+        public static final int updateHuggleLevelButton=0x7f09001d;
+        public static final int updateMwahLevelButton=0x7f090018;
+        public static final int updateSleepyLevelButton=0x7f090013;
         public static final int versionNameTextView=0x7f090004;
         public static final int widget=0x7f09002c;
     }

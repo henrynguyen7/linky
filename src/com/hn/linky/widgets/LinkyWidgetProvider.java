@@ -2,6 +2,7 @@ package com.hn.linky.widgets;
 
 import com.hn.linky.LinkyIntentService;
 import com.hn.linky.R;
+import com.hn.linky.activities.MainActivity;
 import com.hn.linky.valueobjects.Constants;
 
 import android.app.PendingIntent;
@@ -23,22 +24,34 @@ public class LinkyWidgetProvider extends AppWidgetProvider
     	String action = intent.getAction();
     	if (action.equals(Constants.ACTION_SEND_WIDGET_POKE))
     	{
-    		newIntent.setAction(Constants.ACTION_SEND_WIDGET_POKE);    		
+    		newIntent.setAction(Constants.ACTION_SEND_WIDGET_POKE);  
+    		context.startService(newIntent); 
     	}
+    	else if (action.equals(Constants.ACTION_INSTAPIC))
+        {
+    	    Intent instapicIntent = new Intent(context, MainActivity.class);
+    	    instapicIntent.setAction(Constants.ACTION_INSTAPIC);
+    	    instapicIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    	    instapicIntent.putExtra("shouldStartInstapic", true);
+            context.startActivity(instapicIntent);
+        }
     	else if (action.equals(Constants.ACTION_SEND_WIDGET_HUGGLE))
     	{
-    		newIntent.setAction(Constants.ACTION_SEND_WIDGET_HUGGLE);    		
+    		newIntent.setAction(Constants.ACTION_SEND_WIDGET_HUGGLE);
+    		context.startService(newIntent); 
     	}
     	else if (action.equals(Constants.ACTION_SEND_WIDGET_MWAH))
     	{
     		newIntent.setAction(Constants.ACTION_SEND_WIDGET_MWAH);
+    		context.startService(newIntent); 
     	}
     	else if (action.equals(Constants.ACTION_SEND_BUZZ))
     	{
     		newIntent.setAction(Constants.ACTION_SEND_BUZZ);
+    		context.startService(newIntent); 
     	} 	
     	
-        context.startService(newIntent);           
+                  
     }
     
 	@Override
@@ -46,11 +59,17 @@ public class LinkyWidgetProvider extends AppWidgetProvider
 	{        
 		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget);   
         
-        /** pokeWidgetButton intent **/
-        Intent pokeIntent = new Intent(context, LinkyWidgetProvider.class);
-        pokeIntent.setAction(Constants.ACTION_SEND_WIDGET_POKE);        
-        PendingIntent pokePendingIntent = PendingIntent.getBroadcast(context, 0, pokeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.pokeWidgetButton, pokePendingIntent);
+//        /** pokeWidgetButton intent **/
+//        Intent pokeIntent = new Intent(context, LinkyWidgetProvider.class);
+//        pokeIntent.setAction(Constants.ACTION_SEND_WIDGET_POKE);        
+//        PendingIntent pokePendingIntent = PendingIntent.getBroadcast(context, 0, pokeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        remoteViews.setOnClickPendingIntent(R.id.pokeWidgetButton, pokePendingIntent);
+        
+        /** instapicWidgetButton intent **/
+        Intent instapicIntent = new Intent(context, LinkyWidgetProvider.class);
+        instapicIntent.setAction(Constants.ACTION_INSTAPIC);        
+        PendingIntent instapicPendingIntent = PendingIntent.getBroadcast(context, 0, instapicIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.pokeWidgetButton, instapicPendingIntent);
         
         /** huggleWidgetButton intent **/
         Intent hugIntent = new Intent(context, LinkyWidgetProvider.class);
