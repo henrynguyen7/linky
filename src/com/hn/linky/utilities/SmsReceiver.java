@@ -42,10 +42,10 @@ public class SmsReceiver extends BroadcastReceiver
                     abortBroadcast();
                     
                     int originStart = message.indexOf("(") + 1;
-                    int originEnd = message.indexOf(")") - 1;
+                    int originEnd = message.indexOf(")");
                     origin = message.substring(originStart, originEnd);
                     
-                    message = message.substring(originEnd + 2, message.length());
+                    message = message.substring(originEnd + 1, message.length());
                     
                     Intent insertIntent = new Intent(context, LinkyIntentService.class);
                     insertIntent.setAction(Constants.ACTION_INSERT_SMS);

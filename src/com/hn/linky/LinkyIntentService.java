@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -272,7 +273,13 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
             
             PendingIntent pendingIntent = PendingIntent.getService(this, 0, new Intent(this, LinkyIntentService.class), 0);
             SmsManager smsManager = SmsManager.getDefault();
+            
+            //ArrayList<String> messages = smsManager.divideMessage(messageToSend);
+            //int messageCount = messages.size();
+            //ArrayList<PendingIntent> sentIntents = new ArrayList<PendingIntent>(messageCount);
+            
             smsManager.sendTextMessage(mLinkedNumber, null, messageToSend, pendingIntent, null);
+            //smsManager.sendMultipartTextMessage(mLinkedNumber, null, messages, sentIntents, null);
             
             // store the sent sms in the sent folder
             ContentValues values = new ContentValues();
