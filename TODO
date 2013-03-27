@@ -1,4 +1,26 @@
+/*
+ * Old Todo list...
+ */
 + Added settings menu to change linked number.
 - Add customizeable fields and messages
 - Add "a woo woo" message
 - change icon
+
+
+/*
+ * Linky, text forwarder 
+ */
+- install on 2 phones
+- have phones relay texts back and forth to eachother.
+- 2 components:
+	- listener
+		- listens for incoming texts
+		- intercepts
+		- sends modified copy to receiving phone containing original message + sender phone number
+		- allows texts to continue to Messaging app
+	- receiver
+		- listens for texts received from listening phone
+		- intercepts
+		- parses out original sender phone number and message
+		- sends reparsed message to Messaging app with data as if it came directly from original sender
+		- intercepts outgoing 

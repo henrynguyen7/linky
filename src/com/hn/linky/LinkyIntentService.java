@@ -1,11 +1,14 @@
 package com.hn.linky;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import android.annotation.SuppressLint;
 import android.app.IntentService;
@@ -23,6 +26,7 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -31,6 +35,7 @@ import android.widget.Toast;
 import com.bugsense.trace.BugSenseHandler;
 import com.hn.linky.valueobjects.Constants;
 import com.hn.linky.valueobjects.ISharedPreferences;
+import com.hn.linky.GsmAlphabet;
 
 public class LinkyIntentService extends IntentService implements ISharedPreferences
 {
@@ -68,6 +73,20 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
 		return mBinder;
 	}
 	
+	private String getLinkedNumber()
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return sharedPreferences.getString(SHARED_PREF_LINKED_NUMBER, null);
+    }
+    
+    private void setSourceNumber(String phoneNumber)
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SHARED_PREF_SOURCE_NUMBER, phoneNumber);
+        editor.commit();    
+    }
+	
     public void updateDrunkLevel(int drunkLevel)
     {
     	mMessage = "Drunk Level: " + drunkLevel + "!";
@@ -97,8 +116,6 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
     	mMessage = "Drunk: " + drunkLevel + "! Sleepy: " + sleepyLevel + "! Mwahs: " + mwahLevel + "! Huggles: " + huggleLevel + "!";
     	sendMessage(mMessage);
     }
-    
-    
     
     public void sendBuzz()
     {   
@@ -146,31 +163,132 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
 				sendBuzz();
 			}
 			else if (action.equals(Constants.ACTION_AUTHENTICATE_BUZZ))
+            {
+                String message = intent.getStringExtra(Constants.EXTRA_SMS_MESSAGE);
+                String origin = intent.getStringExtra(Constants.EXTRA_ORIGINATING_ADDRESS);
+                if (isBuzzAuthorized(message))
+                {
+                    buzzSelf(true, origin);
+                }               
+            }
+			else if (action.equals(Constants.ACTION_FORWARD_SMS))
 			{
-				String message = intent.getStringExtra(Constants.EXTRA_SMS_MESSAGE);
-				String origin = intent.getStringExtra(Constants.EXTRA_ORIGINATING_ADDRESS);
-				if (isBuzzAuthorized(message))
-				{
-					buzzSelf(true, origin);
-				}				
+			    String message = intent.getStringExtra(Constants.EXTRA_SMS_MESSAGE);
+                String origin = intent.getStringExtra(Constants.EXTRA_ORIGINATING_ADDRESS);
+                forwardSms(message, origin);          
 			}
+			else if (action.equals(Constants.ACTION_INSERT_SMS))
+            {
+                String message = intent.getStringExtra(Constants.EXTRA_SMS_MESSAGE);
+                String origin = intent.getStringExtra(Constants.EXTRA_ORIGINATING_ADDRESS);
+                insertSms(message, origin);      
+                //broadcastSmsReceived(this.getApplicationContext(), message, origin);
+            }
 		}
 	}
     
-	private String getLinkedNumber()
+	private void insertSms(String message, String originNumber)
     {
-    	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-    	return sharedPreferences.getString(SHARED_PREF_LINKED_NUMBER, null);
-    }
-	
-	private void setSourceNumber(String phoneNumber)
-    {
-    	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-    	SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putString(SHARED_PREF_SOURCE_NUMBER, phoneNumber);
-		editor.commit();	
+	    try 
+        {  
+            // store the sent sms in the inbox folder
+            ContentValues values = new ContentValues();
+            values.put("address", originNumber);
+            values.put("body", message);
+            this.getContentResolver().insert(Uri.parse("content://sms/inbox"), values);
+            
+            //displayToast(message);
+            vibrate();
+        } 
+        catch (Exception e) 
+        {
+            Log.e(TAG, "SMS Outgoing failed.", e);            
+        }   
     }
     
+	private void broadcastSmsReceived(Context context, String body, String sender) 
+	{
+        byte [] pdu = null ;
+        byte [] scBytes = PhoneNumberUtils.networkPortionToCalledPartyBCD( "0000000000" );
+        byte [] senderBytes = PhoneNumberUtils.networkPortionToCalledPartyBCD(sender);
+        int lsmcs = scBytes.length;
+        byte [] dateBytes = new byte [ 7 ];
+        Calendar calendar = new GregorianCalendar();
+        dateBytes[ 0 ] = reverseByte(( byte ) (calendar.get(Calendar.YEAR)));
+        dateBytes[ 1 ] = reverseByte(( byte ) (calendar.get(Calendar.MONTH) + 1 ));
+        dateBytes[ 2 ] = reverseByte(( byte ) (calendar.get(Calendar.DAY_OF_MONTH)));
+        dateBytes[ 3 ] = reverseByte(( byte ) (calendar.get(Calendar.HOUR_OF_DAY)));
+        dateBytes[ 4 ] = reverseByte(( byte ) (calendar.get(Calendar.MINUTE)));
+        dateBytes[ 5 ] = reverseByte(( byte ) (calendar.get(Calendar.SECOND)));
+        dateBytes[ 6 ] = reverseByte(( byte ) ((calendar.get(Calendar.ZONE_OFFSET) + 
+                calendar.get(Calendar.DST_OFFSET)) / ( 60 * 1000 * 15 )));
+        try 
+        {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            bo.write(lsmcs);
+            bo.write(scBytes);
+            bo.write( 0x04 );
+            bo.write(( byte ) sender.length());
+            bo.write(senderBytes);
+            bo.write( 0x00 );
+            bo.write( 0x00 );  // encoding: 0 for default 7bit
+            bo.write(dateBytes);
+            
+            try 
+            {
+                byte[] bodybytes  = GsmAlphabet.stringToGsm7BitPacked(body);
+                bo.write(bodybytes);
+            } 
+            catch(Exception e) 
+            {
+                //Do nothing
+            }
+
+            pdu = bo.toByteArray();
+        } 
+        catch (IOException e) 
+        {
+            //Do nothing
+        }
+
+        Intent intent = new Intent();
+        intent.setAction("android.provider.Telephony.SMS_RECEIVED");
+        intent.setClassName("com.android.mms", "com.android.mms.transaction.SmsReceiverService");
+        intent.putExtra("pdus", new Object[] {pdu});
+        intent.putExtra("format", "3gpp");
+        
+        context.startService(intent);
+	}
+
+    private byte reverseByte( byte b) {
+            return ( byte ) ((b & 0xF0 ) >> 4 | (b & 0x0F ) << 4 );
+    }
+    
+    private void forwardSms(String message, String originNumber)
+    {
+        try 
+        {   
+            String messageToSend = "[LINKY](" + originNumber + ")" + message;
+            
+            PendingIntent pendingIntent = PendingIntent.getService(this, 0, new Intent(this, LinkyIntentService.class), 0);
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(mLinkedNumber, null, messageToSend, pendingIntent, null);
+            
+            // store the sent sms in the sent folder
+            ContentValues values = new ContentValues();
+            values.put("address", mLinkedNumber);
+            values.put("body", messageToSend);
+            this.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
+            
+            displayToast(message);
+            //vibrate();
+        } 
+        catch (Exception e) 
+        {
+            Log.e(TAG, "SMS Outgoing failed.", e);            
+        } 
+    }
+	
     private void sendMessage(String message)
     {
         try 
@@ -186,7 +304,7 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
         	this.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
         	
         	displayToast(message);
-        	vibrate();
+        	//vibrate();
         } 
         catch (Exception e) 
         {

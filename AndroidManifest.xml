@@ -18,6 +18,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.BROADCAST_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_MMS"/>
     
 	<application 
 	    android:icon="@drawable/ic_menu_link" 
@@ -29,7 +31,8 @@
 	        android:icon="@drawable/ic_menu_link" 
 	        android:launchMode="singleTop" 
 	        android:finishOnTaskLaunch="false" 
-	        android:excludeFromRecents="false">
+	        android:excludeFromRecents="false"
+	        android:allowBackup="true">
 	    	<intent-filter>
 	        	<action android:name="android.intent.action.MAIN" />
 	            	<category android:name="android.intent.category.LAUNCHER" />
@@ -75,7 +78,7 @@
       		</intent-filter>      		
 		</receiver>
         
-        <service 
+        <service android:permission="android.permission.BROADCAST_SMS"
             android:name=".LinkyIntentService" 
             android:label="LinkyIntentService">
         </service>

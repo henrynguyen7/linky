@@ -12,6 +12,9 @@ public class Constants
 	public static final String ACTION_UPDATE_ALL_LEVELS = "com.hn.linky.action.UPDATE_ALL_LEVELS";
 	public static final String ACTION_INSTAPIC = "com.hn.linky.action.INSTAPIC";
 	
+	public static final String ACTION_FORWARD_SMS = "com.hn.linky.action.FORWARD_SMS";
+	public static final String ACTION_INSERT_SMS = "com.hn.linky.action.INSERT_SMS";
+	
 	public static final String EXTRA_MESSAGE = "messageType";
 	public static final String EXTRA_DRUNK_LEVEL = "drunkLevel";
 	public static final String EXTRA_SLEEPY_LEVEL = "sleepyLevel";
@@ -21,6 +24,7 @@ public class Constants
 	public static final String EXTRA_ORIGINATING_ADDRESS = "originatingAddress";
 	
 	public static final String BUZZ_KEY = "LINKY BUZZ!";
+	public static final String LINKY_KEY = "[LINKY]";
 	
 	public static final int MESSAGE_POKE = 0;	
 	public static final int MESSAGE_KISS = 1;
