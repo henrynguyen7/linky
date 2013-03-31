@@ -19,9 +19,10 @@ public class LinkyWidgetProvider extends AppWidgetProvider
     public void onReceive(Context context, Intent intent) 
     {	
     	super.onReceive(context, intent);
-    	Intent newIntent = new Intent(context, LinkyIntentService.class);
     	
+    	Intent newIntent = new Intent(context, LinkyIntentService.class);
     	String action = intent.getAction();
+    	
     	if (action.equals(Constants.ACTION_SEND_WIDGET_POKE))
     	{
     		newIntent.setAction(Constants.ACTION_SEND_WIDGET_POKE);  
@@ -49,9 +50,7 @@ public class LinkyWidgetProvider extends AppWidgetProvider
     	{
     		newIntent.setAction(Constants.ACTION_SEND_BUZZ);
     		context.startService(newIntent); 
-    	} 	
-    	
-                  
+    	}
     }
     
 	@Override
