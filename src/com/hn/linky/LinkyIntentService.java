@@ -2,6 +2,7 @@ package com.hn.linky;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -12,12 +13,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
+import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -58,8 +61,6 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
 	@Override
 	public IBinder onBind(Intent intent) 
 	{
-		//return super.onBind(intent);
-		//return new LocalBinder<LinkyIntentService>(this);
 		return mBinder;
 	}
 	
@@ -161,21 +162,68 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
                     buzzSelf(true, origin);
                 }               
             }
-			else if (action.equals(Constants.ACTION_FORWARD_SMS))
-			{
-			    String message = intent.getStringExtra(Constants.EXTRA_SMS_MESSAGE);
-                String origin = intent.getStringExtra(Constants.EXTRA_ORIGINATING_ADDRESS);
-                forwardSms(message, origin);          
-			}
 			else if (action.equals(Constants.ACTION_INSERT_SMS))
             {
                 String message = intent.getStringExtra(Constants.EXTRA_SMS_MESSAGE);
                 String origin = intent.getStringExtra(Constants.EXTRA_ORIGINATING_ADDRESS);
                 insertSms(message, origin);      
-                //broadcastSmsReceived(this.getApplicationContext(), message, origin);
+            } 
+			else if (action.equals(Constants.ACTION_FORWARD_SMS))
+            {
+                Bundle bundle = intent.getBundleExtra(Constants.EXTRA_BUNDLE);
+                
+                SmsMessage[] messages = null;
+                String message = null;
+                String origin = null;
+                
+                Object[] pdus = (Object[]) bundle.get("pdus");
+                messages = new SmsMessage[pdus.length]; 
+                
+                for (int i = 0; i < messages.length; i++)
+                {
+                    if (i == 0) 
+                    {
+                        messages[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
+                        origin = messages[i].getOriginatingAddress();
+                        message = "<LINKY>(" + origin + ")";
+                        message += messages[i].getMessageBody().toString();
+                    }
+                    else
+                    {
+                        messages[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
+                        message += messages[i].getMessageBody().toString();
+                    }
+                }
+                
+                try 
+                {   
+                    // prepare message to send
+                    SmsManager smsManager = SmsManager.getDefault();
+                    ArrayList<String> messagesArrayList = smsManager.divideMessage(message);
+                    int messageCount = messagesArrayList.size();
+                    ArrayList<PendingIntent> sendIntents = new ArrayList<PendingIntent>(messageCount);
+                    
+                    // send as multipart message
+                    smsManager.sendMultipartTextMessage(mLinkedNumber, null, messagesArrayList, sendIntents, null);
+                    
+                    // store the sent sms in the sent folder
+                    ContentValues values = new ContentValues();
+                    values.put("address", mLinkedNumber);
+                    values.put("body", message);
+                    this.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
+                    
+                    // display notification of success
+                    displayToast(message);
+                } 
+                catch (Exception e) 
+                {
+                    Log.e(TAG, "SMS Outgoing failed.", e);            
+                }
             }
 		}
 	}
+	
+	
     
 	private void insertSms(String message, String originNumber)
     {
@@ -187,12 +235,11 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
             values.put("body", message);
             this.getContentResolver().insert(Uri.parse("content://sms/inbox"), values);
             
-            //displayToast(message);
             vibrate();
         } 
         catch (Exception e) 
         {
-            Log.e(TAG, "SMS Outgoing failed.", e);            
+            Log.e(TAG, "SMS Insertion failed.", e);            
         }   
     }
     
@@ -254,37 +301,6 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
             return ( byte ) ((b & 0xF0 ) >> 4 | (b & 0x0F ) << 4 );
     }
     
-    private void forwardSms(String message, String originNumber)
-    {
-        try 
-        {   
-            String messageToSend = "[LINKY](" + originNumber + ")" + message;
-            
-            PendingIntent pendingIntent = PendingIntent.getService(this, 0, new Intent(this, LinkyIntentService.class), 0);
-            SmsManager smsManager = SmsManager.getDefault();
-            
-            //ArrayList<String> messages = smsManager.divideMessage(messageToSend);
-            //int messageCount = messages.size();
-            //ArrayList<PendingIntent> sentIntents = new ArrayList<PendingIntent>(messageCount);
-            
-            smsManager.sendTextMessage(mLinkedNumber, null, messageToSend, pendingIntent, null);
-            //smsManager.sendMultipartTextMessage(mLinkedNumber, null, messages, sentIntents, null);
-            
-            // store the sent sms in the sent folder
-            ContentValues values = new ContentValues();
-            values.put("address", mLinkedNumber);
-            values.put("body", messageToSend);
-            this.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
-            
-            displayToast(message);
-            //vibrate();
-        } 
-        catch (Exception e) 
-        {
-            Log.e(TAG, "SMS Outgoing failed.", e);            
-        } 
-    }
-	
     private void sendMessage(String message)
     {
         try 

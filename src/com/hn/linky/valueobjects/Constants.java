@@ -21,10 +21,12 @@ public class Constants
 	public static final String EXTRA_MWAH_LEVEL = "mwahLevel";
 	public static final String EXTRA_HUGGLE_LEVEL = "huggleLevel";
 	public static final String EXTRA_SMS_MESSAGE = "smsMessage";
+	public static final String EXTRA_PDUS = "pdus";
+	public static final String EXTRA_BUNDLE = "bundle";
 	public static final String EXTRA_ORIGINATING_ADDRESS = "originatingAddress";
 	
 	public static final String BUZZ_KEY = "LINKY BUZZ!";
-	public static final String LINKY_KEY = "[LINKY]";
+	public static final String LINKY_KEY = "<LINKY>";
 	
 	public static final int MESSAGE_POKE = 0;	
 	public static final int MESSAGE_KISS = 1;
