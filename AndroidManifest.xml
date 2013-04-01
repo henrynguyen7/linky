@@ -2,7 +2,7 @@
 <manifest 
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hn.linky"
-    android:versionCode="12"
+    android:versionCode="13"
     android:versionName="@string/versionName" >
 
     <uses-sdk android:minSdkVersion="4" 
