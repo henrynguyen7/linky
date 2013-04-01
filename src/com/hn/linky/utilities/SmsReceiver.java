@@ -31,7 +31,7 @@ public class SmsReceiver extends BroadcastReceiver
                                   
             if (message.startsWith(Constants.LINKY_KEY))
             { 
-                abortBroadcast();
+                //abortBroadcast();
                     
                 //Parse the Linky-forwarded message for the true originating address
                 int originStart = message.indexOf("(") + 1;

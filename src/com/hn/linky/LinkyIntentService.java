@@ -12,6 +12,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -235,13 +236,54 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
             values.put("body", message);
             this.getContentResolver().insert(Uri.parse("content://sms/inbox"), values);
             
-            vibrate();
+            purgeLinkyMessages();
+            
+            //vibrate();
         } 
         catch (Exception e) 
         {
             Log.e(TAG, "SMS Insertion failed.", e);            
         }   
     }
+	
+	private void purgeLinkyMessages()
+	{
+	    Uri deleteUri = Uri.parse("content://sms/inbox");
+	    Cursor c = getContentResolver().query(deleteUri, null, null, null, null); 
+	    c.moveToFirst(); 
+	    
+	    
+	    /* Used to determine column names which vary by device
+	    String[] columnNames = c.getColumnNames();
+	    for (int i = 0; i < columnNames.length; ++i)
+	    {
+	        Log.e(TAG, i + columnNames[i]);
+	    }
+	    */
+	    
+	    
+	    while (c.moveToNext())
+	    {
+	        try
+	        {
+	            String body = c.getString(12);
+
+	            if (body.startsWith(Constants.LINKY_KEY))
+	            {   
+	                String pid = c.getString(1);
+	                String uri = "content://sms/conversations/" + pid;
+	                getContentResolver().delete(Uri.parse(uri), null, null);
+	                stopSelf();
+	            }
+	        }
+	        catch (Exception e)
+	        {
+	            e.printStackTrace();
+	        }
+	    } 
+	}
+	
+	
     
 	private void broadcastSmsReceived(Context context, String body, String sender) 
 	{
