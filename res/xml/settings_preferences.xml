@@ -2,6 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Settings">
     <EditTextPreference
+        android:key="forwardingNumber"
+        android:title="Forwarding Number"
+        android:icon="@drawable/ic_menu_link" 
+        android:inputType="number"
+        android:persistent="true" />
+    <EditTextPreference
         android:key="linkedNumber"
         android:title="Linked Number"
         android:icon="@drawable/ic_menu_link" 

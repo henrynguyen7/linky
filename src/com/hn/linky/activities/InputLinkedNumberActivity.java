@@ -34,15 +34,18 @@ public class InputLinkedNumberActivity extends Activity implements ISharedPrefer
     	{
         	setContentView(R.layout.input_linked_number_activity);
         	
-        	final EditText linkedNumberEditText = (EditText) findViewById(R.id.passwordText);
+        	final EditText forwardingNumberEditText = (EditText) findViewById(R.id.forwardingNumberTextView);
+        	final EditText linkedNumberEditText = (EditText) findViewById(R.id.linkedNumberTextView);
         	
         	Button submitButton = (Button) findViewById(R.id.submitButton);
         	submitButton.setOnClickListener(new OnClickListener()
         	{  
         	    public void onClick(View v) 
         	    {  
-        	    	String phoneNumber = linkedNumberEditText.getText().toString();        	    	
-        	    	saveLinkedNumber(phoneNumber);
+        	        String forwardingPhoneNumber = forwardingNumberEditText.getText().toString();                  
+                    saveForwardingNumber(forwardingPhoneNumber);
+        	    	String linkedPhoneNumber = linkedNumberEditText.getText().toString();        	    	
+        	    	saveLinkedNumber(linkedPhoneNumber);
         	    	logIn();
         	    }  
         	});
@@ -67,6 +70,14 @@ public class InputLinkedNumberActivity extends Activity implements ISharedPrefer
     	Intent intent = new Intent(InputLinkedNumberActivity.this, MainActivity.class);
 		startActivity(intent);
 		finish();	
+    }
+    
+    private void saveForwardingNumber(String phoneNumber)
+    {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SHARED_PREF_FORWARDING_NUMBER, phoneNumber);
+        editor.commit();
     }
     
     private void saveLinkedNumber(String phoneNumber)

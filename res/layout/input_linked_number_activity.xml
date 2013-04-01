@@ -8,7 +8,27 @@
     android:weightSum="1" >
 
     <TextView
-        android:id="@+id/descriptionTextView"
+        android:id="@+id/forwardingNumberDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/forwardingNumberDescriptionText" />
+
+    <EditText
+        android:id="@+id/forwardingNumberTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical|center"
+        android:hint="@string/forwardingNumberExampleText"
+        android:inputType="phone" >
+        <requestFocus />
+    </EditText>
+    
+    <TextView
+        android:id="@+id/linkedNumberDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -16,18 +36,16 @@
         android:text="@string/linkedNumberDescriptionText" />
 
     <EditText
-        android:id="@+id/passwordText"
+        android:id="@+id/linkedNumberTextView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:gravity="center_vertical|center"
         android:hint="@string/linkedNumberExampleText"
-        android:inputType="phone|textPassword" >
-
-        <requestFocus />
+        android:inputType="phone" >
     </EditText>
-
+    
     <Button
         android:id="@+id/submitButton"
         android:layout_width="fill_parent"

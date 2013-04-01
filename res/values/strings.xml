@@ -6,9 +6,11 @@
     <string name="appName">Linky</string>
     
     <!-- InputLinkedNumberActivity strings -->
-    <string name="linkedNumberDescriptionText">Please enter phone number to link me to.</string>
-    <string name="submitLinkedNumberButtonText">Link Me!</string>
+    <string name="forwardingNumberDescriptionText">Please enter phone number to forward SMSes to.</string>
+    <string name="forwardingNumberExampleText">ex. 7145551234</string>
+    <string name="linkedNumberDescriptionText">Please enter phone number to send Linky messages to.</string>
     <string name="linkedNumberExampleText">ex. 7145551234</string>
+    <string name="submitLinkedNumberButtonText">Link Me!</string>
     
     <!-- MainActivity strings -->    
     <string name="drunkLevelMax">10</string>

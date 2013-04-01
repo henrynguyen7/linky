@@ -18,7 +18,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,7 +28,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -37,7 +35,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity
 {	
-	//private final String TAG = "MainActivity";
+	private final String TAG = "MainActivity";
 	
 	private int mDrunkLevel = 0;	
 	private TextView mDrunkLevelTextView;
@@ -266,27 +264,45 @@ public class MainActivity extends Activity
 	
 	public void updateDrunkLevelButton(final View view)
 	{
-		mService.updateDrunkLevel(mDrunkLevel);
+		Intent intent = new Intent(this.getApplicationContext(), LinkyIntentService.class);
+        intent.setAction(Constants.ACTION_UPDATE_DRUNK_LEVEL);
+        intent.putExtra(Constants.EXTRA_LEVEL, mDrunkLevel);
+        this.getApplicationContext().startService(intent); 
 	}
 	
 	public void updateSleepyLevelButton(final View view)
 	{
-		mService.updateSleepyLevel(mSleepyLevel);
+	    Intent intent = new Intent(this.getApplicationContext(), LinkyIntentService.class);
+        intent.setAction(Constants.ACTION_UPDATE_SLEEPY_LEVEL);
+        intent.putExtra(Constants.EXTRA_LEVEL, mSleepyLevel);
+        this.getApplicationContext().startService(intent);
 	}
 	
 	public void updateMwahLevelButton(final View view)
 	{
-		mService.updateMwahLevel(mMwahLevel);
+	    Intent intent = new Intent(this.getApplicationContext(), LinkyIntentService.class);
+        intent.setAction(Constants.ACTION_UPDATE_MWAH_LEVEL);
+        intent.putExtra(Constants.EXTRA_LEVEL, mMwahLevel);
+        this.getApplicationContext().startService(intent);
 	}
 	
 	public void updateHuggleLevelButton(final View view)
 	{
-		mService.updateHuggleLevel(mHuggleLevel);
+	    Intent intent = new Intent(this.getApplicationContext(), LinkyIntentService.class);
+        intent.setAction(Constants.ACTION_UPDATE_HUGGLE_LEVEL);
+        intent.putExtra(Constants.EXTRA_LEVEL, mHuggleLevel);
+        this.getApplicationContext().startService(intent);
 	}	
 	
 	public void updateAllLevelsButton(final View view)
 	{
-		mService.updateAllLevels(mDrunkLevel, mSleepyLevel, mMwahLevel, mHuggleLevel);
+	    Intent intent = new Intent(this.getApplicationContext(), LinkyIntentService.class);
+        intent.setAction(Constants.ACTION_UPDATE_ALL_LEVELS);
+        intent.putExtra(Constants.EXTRA_DRUNK_LEVEL, mDrunkLevel);
+        intent.putExtra(Constants.EXTRA_SLEEPY_LEVEL, mSleepyLevel);
+        intent.putExtra(Constants.EXTRA_MWAH_LEVEL, mMwahLevel);
+        intent.putExtra(Constants.EXTRA_HUGGLE_LEVEL, mHuggleLevel);
+        this.getApplicationContext().startService(intent);
 	}
 	
 	public void instapicButton(final View view)
@@ -344,7 +360,7 @@ public class MainActivity extends Activity
 	}
 
 	/** Create a File for saving an image or video */
-	@SuppressLint({ "NewApi", "NewApi", "NewApi" })
+	@SuppressLint({ "NewApi", "NewApi", "NewApi", "SimpleDateFormat" })
 	private static File getOutputMediaFile()
 	{
 	    File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
@@ -367,7 +383,6 @@ public class MainActivity extends Activity
 
 	    return mediaFile;
 	}
-
 
 	public void buzzButton(final View view)
 	{

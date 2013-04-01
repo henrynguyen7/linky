@@ -12,7 +12,9 @@ import android.preference.PreferenceManager;
 
 public class SettingsActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener, ISharedPreferences
 {	
+    private EditTextPreference forwardingNumberPreference;
 	private EditTextPreference linkedNumberPreference;
+	private String forwardingNumber;
 	private String linkedNumber;
 	
 	@Override
@@ -23,6 +25,8 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
         getPreferences();
                 
         //TODO Implement SettingsActivity as Preference Fragment per Android 3.0+
+        forwardingNumberPreference = (EditTextPreference) findPreference(SHARED_PREF_FORWARDING_NUMBER);
+        forwardingNumberPreference.setSummary(forwardingNumber);
         linkedNumberPreference = (EditTextPreference) findPreference(SHARED_PREF_LINKED_NUMBER);
         linkedNumberPreference.setSummary(linkedNumber);
     }
@@ -57,6 +61,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
     private void getPreferences() 
     {
     	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+    	forwardingNumber = preferences.getString(SHARED_PREF_FORWARDING_NUMBER, null);
     	linkedNumber = preferences.getString(SHARED_PREF_LINKED_NUMBER, null);
     }
 }
