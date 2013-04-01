@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
@@ -203,9 +204,27 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
 			 */
 			else if (action.equals(Constants.ACTION_INSERT_SMS))
             {
-                String message = intent.getStringExtra(Constants.EXTRA_SMS_MESSAGE);
-                String origin = intent.getStringExtra(Constants.EXTRA_ORIGINATING_ADDRESS);
-                insertSms(message, origin);      
+			    String message = intent.getStringExtra(Constants.EXTRA_SMS_MESSAGE);
+			    String origin = intent.getStringExtra(Constants.EXTRA_ORIGINATING_ADDRESS);
+			    insertSms(message, origin);
+			    
+			    // Must wait for the native sms app to insert the sms before we can delete it
+			    //purgeLinkyMessages();
+			    new Thread()
+                { 
+                    public void run()
+                    { 
+                        try 
+                        { 
+                            sleep(1000);
+                            purgeLinkyMessages();
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
             } 
 			else if (action.equals(Constants.ACTION_FORWARD_SMS))
             {
@@ -268,7 +287,6 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
             values.put("address", originNumber);
             values.put("body", message);
             this.getContentResolver().insert(Uri.parse("content://sms/inbox"), values);
-            purgeLinkyMessages();
         } 
         catch (Exception e) 
         {
@@ -277,20 +295,19 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
     }
 	
 	private void purgeLinkyMessages()
-	{
-	    Uri deleteUri = Uri.parse("content://sms/inbox");
-	    Cursor c = getContentResolver().query(deleteUri, null, null, null, null); 
+	{   
+	    Uri deleteUri = Uri.parse("content://sms/inbox/");
+	    Cursor c = this.getContentResolver().query(deleteUri, null, null, null, null); 
 	    c.moveToFirst(); 
+	     
+	    //Used to determine column names which vary by device
+//	    String[] columnNames = c.getColumnNames();
+//	    for (int i = 0; i < columnNames.length; ++i)
+//	    {
+//	        Log.e(TAG, i + columnNames[i]);
+//	    }
 	    
-	    /* Used to determine column names which vary by device
-	    String[] columnNames = c.getColumnNames();
-	    for (int i = 0; i < columnNames.length; ++i)
-	    {
-	        Log.e(TAG, i + columnNames[i]);
-	    }
-	    */
-	    
-	    while (c.moveToNext())
+	    do 
 	    {
 	        try
 	        {
@@ -308,9 +325,9 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
 	        {
 	            e.printStackTrace();
 	        }
-	    } 
+	    } while (c.moveToNext());
 	}
-    
+	
     private void sendMessage(String message)
     {
         try 
