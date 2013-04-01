@@ -78,45 +78,44 @@ public final class R {
         public static final int options=0x7f080000;
     }
     public static final class string {
-        public static final int appName=0x7f060002;
-        public static final int buzzButtonText=0x7f060016;
-        public static final int buzzWidgetButtonText=0x7f06001c;
+        public static final int appName=0x7f060001;
+        public static final int buzzButtonText=0x7f060015;
+        public static final int buzzWidgetButtonText=0x7f06001b;
         /**  MainActivity strings 
          */
-        public static final int drunkLevelMax=0x7f060008;
-        public static final int drunkLevelText=0x7f060009;
+        public static final int drunkLevelMax=0x7f060007;
+        public static final int drunkLevelText=0x7f060008;
         /**  InputLinkedNumberActivity strings 
          */
-        public static final int forwardingNumberDescriptionText=0x7f060003;
-        public static final int forwardingNumberExampleText=0x7f060004;
-        public static final int huggleLevelMax=0x7f060011;
-        public static final int huggleLevelText=0x7f060012;
-        public static final int huggleWidgetButtonText=0x7f06001a;
-        public static final int instapicButtonText=0x7f060015;
-        public static final int linkedNumberDescriptionText=0x7f060005;
-        public static final int linkedNumberExampleText=0x7f060006;
-        public static final int menuHelpLabel=0x7f060018;
+        public static final int forwardingNumberDescriptionText=0x7f060002;
+        public static final int forwardingNumberExampleText=0x7f060003;
+        public static final int huggleLevelMax=0x7f060010;
+        public static final int huggleLevelText=0x7f060011;
+        public static final int huggleWidgetButtonText=0x7f060019;
+        public static final int instapicButtonText=0x7f060014;
+        public static final int linkedNumberDescriptionText=0x7f060004;
+        public static final int linkedNumberExampleText=0x7f060005;
+        public static final int menuHelpLabel=0x7f060017;
         /**  Menu strings 
          */
-        public static final int menuSettingsLabel=0x7f060017;
-        public static final int mwahLevelMax=0x7f06000e;
-        public static final int mwahLevelText=0x7f06000f;
-        public static final int mwahWidgetButtonText=0x7f06001b;
+        public static final int menuSettingsLabel=0x7f060016;
+        public static final int mwahLevelMax=0x7f06000d;
+        public static final int mwahLevelText=0x7f06000e;
+        public static final int mwahWidgetButtonText=0x7f06001a;
         /**  Widget strings 
          */
-        public static final int pokeWidgetButtonText=0x7f060019;
-        public static final int sleepyLevelMax=0x7f06000b;
-        public static final int sleepyLevelText=0x7f06000c;
-        public static final int submitLinkedNumberButtonText=0x7f060007;
-        public static final int updateAllLevelsButtonText=0x7f060014;
-        public static final int updateDrunkLevelButtonText=0x7f06000a;
-        public static final int updateHuggleLevelButtonText=0x7f060013;
-        public static final int updateMwahLevelButtonText=0x7f060010;
-        public static final int updateSleepyLevelButtonText=0x7f06000d;
+        public static final int pokeWidgetButtonText=0x7f060018;
+        public static final int sleepyLevelMax=0x7f06000a;
+        public static final int sleepyLevelText=0x7f06000b;
+        public static final int submitLinkedNumberButtonText=0x7f060006;
+        public static final int updateAllLevelsButtonText=0x7f060013;
+        public static final int updateDrunkLevelButtonText=0x7f060009;
+        public static final int updateHuggleLevelButtonText=0x7f060012;
+        public static final int updateMwahLevelButtonText=0x7f06000f;
+        public static final int updateSleepyLevelButtonText=0x7f06000c;
         /**  Linky App strings 
          */
-        public static final int versionCode=0x7f060000;
-        public static final int versionName=0x7f060001;
+        public static final int versionName=0x7f060000;
     }
     public static final class style {
         public static final int WidgetBackground=0x7f070000;

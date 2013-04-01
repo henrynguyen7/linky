@@ -2,7 +2,6 @@
 <resources>
     
     <!-- Linky App strings -->
-    <string name="versionCode">12</string>
     <string name="versionName">1.1.00</string>
     <string name="appName">Linky</string>
     
