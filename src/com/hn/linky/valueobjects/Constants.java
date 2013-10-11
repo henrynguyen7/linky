@@ -3,7 +3,7 @@ package com.hn.linky.valueobjects;
 public class Constants
 {
     public static final String BUZZ_KEY = "LINKY BUZZ!";
-    public static final String LINKY_KEY = "<LINKY>";
+    public static final String LINKY_KEY = "<L>";
     
 	public static final String ACTION_SEND_MESSAGE = "com.hn.linky.action.SEND_MESSAGE";
 	public static final String ACTION_SEND_BUZZ = "com.hn.linky.action.SEND_BUZZ";

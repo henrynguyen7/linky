@@ -33,24 +33,38 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Main Activity that displays all the available operations on one screen. Operations include
+ * sending of various pre-defined SMS messages, one-tap capture and sending of Instapic MMS photo,
+ * and sending of a Linky Buzz which triggers a vibrate and toast notification on the Linked
+ * phone if Linky is also installed.
+ * 
+ * For most operations, this activity binds to the LinkyIntentService which handles the creation
+ * and sending of the SMS. The only operation which does not require the LinkyIntentService
+ * is the Instapic MMS photo which requires that the Activity create the intent. 
+ * 
+ * @author henry@dxconcept.com
+ *
+ */
 public class MainActivity extends Activity
 {	
 	private final String TAG = "MainActivity";
 	
-	private int mDrunkLevel = 0;	
+	private Uri instapticUri;
+	
+	private int mDrunkLevel = 0;
+	private int mSleepyLevel = 0;
+	private int mMwahLevel = 0;
+	private int mHuggleLevel = 0;
+	
 	private TextView mDrunkLevelTextView;
-	private SeekBar mDrunkLevelSeekBar;
-	
-	private int mSleepyLevel = 0;	
 	private TextView mSleepyLevelTextView;
-	private SeekBar mSleepyLevelSeekBar;
-	
-	private int mMwahLevel = 0;	
 	private TextView mMwahLevelTextView;
-	private SeekBar mMwahLevelSeekBar;
-	
-	private int mHuggleLevel = 0;	
 	private TextView mHuggleLevelTextView;
+	
+	private SeekBar mDrunkLevelSeekBar;
+	private SeekBar mSleepyLevelSeekBar;
+	private SeekBar mMwahLevelSeekBar;
 	private SeekBar mHuggleLevelSeekBar;
 	
 	private boolean mBound;
@@ -101,7 +115,6 @@ public class MainActivity extends Activity
 		Intent intent = new Intent(this, LinkyIntentService.class);
 		bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 				
-		// Set Seekbar OnProgressChanged Listeners		
 		/* Drunk level */
     	mDrunkLevelTextView = (TextView) findViewById(R.id.drunkLevelTextView);
     	mDrunkLevelSeekBar = (SeekBar) findViewById(R.id.drunkLevelSeekBar);
@@ -244,25 +257,39 @@ public class MainActivity extends Activity
 	    }
 	}
 	
-	private void showHelp()
-	{
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Sorry... help's not available yet :(")
-				.setCancelable(false)
-				.setPositiveButton("OK", new android.content.DialogInterface.OnClickListener() 
-				{
-					public void onClick(DialogInterface arg0, int arg1) 
-					{
-					}
-		       	});
-		AlertDialog alert = builder.create();
-		alert.show();
-	}
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) 
+    {
+        if (requestCode == Constants.INSTAPIC_REQUEST_CODE) 
+        {
+            if (resultCode == RESULT_OK) 
+            {
+                // Image captured and saved to fileUri specified in the Intent
+                mService.sendInstapic(instapticUri);
+                Toast.makeText(this, "Instapic saved and ready to send!", Toast.LENGTH_LONG).show();
+            } 
+            else if (resultCode == RESULT_CANCELED) 
+            {
+                this.finish();
+            } 
+            else 
+            {
+                // TODO: Image capture failed, advise user
+            }
+        }
+    }
+
+	/*
+	 *  Button onClick methods 
+	 * Defined in main_activity.xml 
+	 */
 	
-	/** Button onClick methods 
-	 * Defined in main_activity.xml **/	
-	
-	public void updateDrunkLevelButton(final View view)
+	public void buzz(final View view)
+    {
+    	mService.sendBuzz();
+    }
+
+    public void updateDrunkLevel(final View view)
 	{
 		Intent intent = new Intent(this.getApplicationContext(), LinkyIntentService.class);
         intent.setAction(Constants.ACTION_UPDATE_DRUNK_LEVEL);
@@ -270,7 +297,7 @@ public class MainActivity extends Activity
         this.getApplicationContext().startService(intent); 
 	}
 	
-	public void updateSleepyLevelButton(final View view)
+	public void updateSleepyLevel(final View view)
 	{
 	    Intent intent = new Intent(this.getApplicationContext(), LinkyIntentService.class);
         intent.setAction(Constants.ACTION_UPDATE_SLEEPY_LEVEL);
@@ -278,7 +305,7 @@ public class MainActivity extends Activity
         this.getApplicationContext().startService(intent);
 	}
 	
-	public void updateMwahLevelButton(final View view)
+	public void updateMwahLevel(final View view)
 	{
 	    Intent intent = new Intent(this.getApplicationContext(), LinkyIntentService.class);
         intent.setAction(Constants.ACTION_UPDATE_MWAH_LEVEL);
@@ -286,7 +313,7 @@ public class MainActivity extends Activity
         this.getApplicationContext().startService(intent);
 	}
 	
-	public void updateHuggleLevelButton(final View view)
+	public void updateHuggleLevel(final View view)
 	{
 	    Intent intent = new Intent(this.getApplicationContext(), LinkyIntentService.class);
         intent.setAction(Constants.ACTION_UPDATE_HUGGLE_LEVEL);
@@ -294,7 +321,7 @@ public class MainActivity extends Activity
         this.getApplicationContext().startService(intent);
 	}	
 	
-	public void updateAllLevelsButton(final View view)
+	public void updateAllLevels(final View view)
 	{
 	    Intent intent = new Intent(this.getApplicationContext(), LinkyIntentService.class);
         intent.setAction(Constants.ACTION_UPDATE_ALL_LEVELS);
@@ -313,14 +340,9 @@ public class MainActivity extends Activity
         }
         catch(IOException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-	    
-		// mService.instapic();
 	}
-	
-	private Uri instapticUri;
 	
 	private void dispatchTakePictureIntent() throws IOException 
 	{
@@ -331,28 +353,6 @@ public class MainActivity extends Activity
         startActivityForResult(takePictureIntent, Constants.INSTAPIC_REQUEST_CODE);
 	}
 	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) 
-	{
-	    if (requestCode == Constants.INSTAPIC_REQUEST_CODE) 
-	    {
-	        if (resultCode == RESULT_OK) 
-	        {
-	            // Image captured and saved to fileUri specified in the Intent
-                mService.sendInstapic(instapticUri);
-	            Toast.makeText(this, "Instapic saved and ready to send!", Toast.LENGTH_LONG).show();
-	        } 
-	        else if (resultCode == RESULT_CANCELED) 
-	        {
-	            this.finish();
-	        } 
-	        else 
-	        {
-	            // Image capture failed, advise user
-	        }
-	    }
-	}
-
 	/** Create a file Uri for saving an image or video */
 	private static Uri getOutputMediaFileUri()
 	{
@@ -367,9 +367,9 @@ public class MainActivity extends Activity
 	              Environment.DIRECTORY_PICTURES), "Linky");
 
 	    // Create the storage directory if it does not exist
-	    if (! mediaStorageDir.exists())
+	    if (!mediaStorageDir.exists())
 	    {
-	        if (! mediaStorageDir.mkdirs())
+	        if (!mediaStorageDir.mkdirs())
 	        {
 	            Log.d("Linky", "failed to create directory");
 	            return null;
@@ -384,8 +384,18 @@ public class MainActivity extends Activity
 	    return mediaFile;
 	}
 
-	public void buzzButton(final View view)
-	{
-		mService.sendBuzz();
-	}
+	private void showHelp()
+    {
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage("Sorry... help's not available yet :(")
+    			.setCancelable(false)
+    			.setPositiveButton("OK", new android.content.DialogInterface.OnClickListener() 
+    			{
+    				public void onClick(DialogInterface arg0, int arg1) 
+    				{
+    				}
+    	       	});
+    	AlertDialog alert = builder.create();
+    	alert.show();
+    }
 }

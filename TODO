@@ -1,18 +1,17 @@
 /*
- * Old Todo list...
+ * Todo list...
  */
-+ Added settings menu to change linked number.
++ Add settings menu to change linked number
 - Add customizeable fields and messages
-- Add "a woo woo" message
 - change icon
 
 
 /*
  * Linky, text forwarder 
  */
-- install on 2 phones
-- have phones relay texts back and forth to eachother.
-- 2 components:
++ install on 2 phones
++ have phones relay texts back and forth to eachother.
++ 2 components:
 	- listener
 		- listens for incoming texts
 		- intercepts

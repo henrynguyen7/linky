@@ -13,6 +13,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+/**
+ * Class to provide support for Android widget functionality. Similar to activities,
+ * this class merely passes intents on to the LinkyIntentService for processing. The only
+ * exception is Instapic which requires that the intent be started by an Activity.
+ * 
+ * @author henry
+ *
+ */
 public class LinkyWidgetProvider extends AppWidgetProvider 
 {	
     @Override
@@ -20,36 +28,38 @@ public class LinkyWidgetProvider extends AppWidgetProvider
     {	
     	super.onReceive(context, intent);
     	
-    	Intent newIntent = new Intent(context, LinkyIntentService.class);
     	String action = intent.getAction();
     	
-    	if (action.equals(Constants.ACTION_SEND_WIDGET_POKE))
-    	{
-    		newIntent.setAction(Constants.ACTION_SEND_WIDGET_POKE);  
-    		context.startService(newIntent); 
-    	}
-    	else if (action.equals(Constants.ACTION_INSTAPIC))
+    	if (action.equals(Constants.ACTION_INSTAPIC))
         {
-    	    Intent instapicIntent = new Intent(context, MainActivity.class);
-    	    instapicIntent.setAction(Constants.ACTION_INSTAPIC);
-    	    instapicIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    	    instapicIntent.putExtra("shouldStartInstapic", true);
+            Intent instapicIntent = new Intent(context, MainActivity.class);
+            instapicIntent.setAction(Constants.ACTION_INSTAPIC);
+            instapicIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            instapicIntent.putExtra("shouldStartInstapic", true);
             context.startActivity(instapicIntent);
         }
-    	else if (action.equals(Constants.ACTION_SEND_WIDGET_HUGGLE))
+    	else
     	{
-    		newIntent.setAction(Constants.ACTION_SEND_WIDGET_HUGGLE);
-    		context.startService(newIntent); 
-    	}
-    	else if (action.equals(Constants.ACTION_SEND_WIDGET_MWAH))
-    	{
-    		newIntent.setAction(Constants.ACTION_SEND_WIDGET_MWAH);
-    		context.startService(newIntent); 
-    	}
-    	else if (action.equals(Constants.ACTION_SEND_BUZZ))
-    	{
-    		newIntent.setAction(Constants.ACTION_SEND_BUZZ);
-    		context.startService(newIntent); 
+    	    Intent messageIntent = new Intent(context, LinkyIntentService.class);
+    	    
+    	    if (action.equals(Constants.ACTION_SEND_WIDGET_POKE))
+            {
+                messageIntent.setAction(Constants.ACTION_SEND_WIDGET_POKE);
+            }
+            else if (action.equals(Constants.ACTION_SEND_WIDGET_HUGGLE))
+            {
+                messageIntent.setAction(Constants.ACTION_SEND_WIDGET_HUGGLE);
+            }
+            else if (action.equals(Constants.ACTION_SEND_WIDGET_MWAH))
+            {
+                messageIntent.setAction(Constants.ACTION_SEND_WIDGET_MWAH); 
+            }
+            else if (action.equals(Constants.ACTION_SEND_BUZZ))
+            {
+                messageIntent.setAction(Constants.ACTION_SEND_BUZZ);
+            }
+    	    
+    	    context.startService(messageIntent);
     	}
     }
     

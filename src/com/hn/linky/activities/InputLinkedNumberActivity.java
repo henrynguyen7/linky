@@ -13,6 +13,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * Activity for user to input initial app settings including linked number (the
+ * number that all messages will be sent to) and the forwarding number (the number
+ * that all SMS messages will be forwarded to).
+ * 
+ * @author henry@dxconcept.com
+ *
+ */
 public class InputLinkedNumberActivity extends Activity implements ISharedPreferences
 {	
 	@Override
@@ -44,27 +52,33 @@ public class InputLinkedNumberActivity extends Activity implements ISharedPrefer
         	    {  
         	        String forwardingPhoneNumber = forwardingNumberEditText.getText().toString();                  
                     saveForwardingNumber(forwardingPhoneNumber);
+                    
         	    	String linkedPhoneNumber = linkedNumberEditText.getText().toString();        	    	
         	    	saveLinkedNumber(linkedPhoneNumber);
+        	    	
         	    	logIn();
-        	    }  
+        	    }
         	});
     	}
 	}
 
+    /**
+     * Checks the local SharedPreferences for a linked number which means that this
+     * instance of the app is currently linked.
+     * 
+     * @return true if a linked number is found, false if otherwise
+     */
 	private boolean isLinked()
     {
     	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-    	if (sharedPreferences.getString(SHARED_PREF_LINKED_NUMBER, null) == null)
-    	{
-    		return false;
-    	}
-    	else 
-    	{
-    		return true;
-    	}
+    	String linkedNumber = sharedPreferences.getString(SHARED_PREF_LINKED_NUMBER, null);
+    	
+    	return !"".equals(linkedNumber);
     }
     
+	/**
+     * Creates an intent to launch the Main Activity and thus log in. Finishes this activity when done.
+     */
     private void logIn()
     {
     	Intent intent = new Intent(InputLinkedNumberActivity.this, MainActivity.class);
@@ -72,6 +86,11 @@ public class InputLinkedNumberActivity extends Activity implements ISharedPrefer
 		finish();	
     }
     
+    /**
+     * Saves the destination number for forwarding all SMSes.
+     * 
+     * @param phoneNumber: the number to forward to
+     */
     private void saveForwardingNumber(String phoneNumber)
     {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -80,6 +99,11 @@ public class InputLinkedNumberActivity extends Activity implements ISharedPrefer
         editor.commit();
     }
     
+    /**
+     * Saves the linked number for sending all Linky SMSes.
+     * 
+     * @param phoneNumber: the number to send messages to
+     */
     private void saveLinkedNumber(String phoneNumber)
     {
     	SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
