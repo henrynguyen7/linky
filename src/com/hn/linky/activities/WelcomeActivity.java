@@ -21,7 +21,7 @@ import android.widget.EditText;
  * @author henry@dxconcept.com
  *
  */
-public class InputLinkedNumberActivity extends Activity implements ISharedPreferences
+public class WelcomeActivity extends Activity implements ISharedPreferences
 {	
 	@Override
     public void onCreate(Bundle savedInstanceState)
@@ -81,7 +81,7 @@ public class InputLinkedNumberActivity extends Activity implements ISharedPrefer
      */
     private void logIn()
     {
-    	Intent intent = new Intent(InputLinkedNumberActivity.this, MainActivity.class);
+    	Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
 		startActivity(intent);
 		finish();	
     }
