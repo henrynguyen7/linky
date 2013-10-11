@@ -214,13 +214,13 @@ public class LinkyIntentService extends IntentService implements ISharedPreferen
 			else if (action.equals(Constants.ACTION_FORWARD_SMS))
             {
                 Bundle bundle = intent.getBundleExtra(Constants.EXTRA_BUNDLE);
+                Object[] pdus = (Object[]) bundle.get("pdus");
                 
                 SmsMessage[] messages = null;
+                messages = new SmsMessage[pdus.length]; 
+                
                 String message = null;
                 String origin = null;
-                
-                Object[] pdus = (Object[]) bundle.get("pdus");
-                messages = new SmsMessage[pdus.length]; 
                 
                 for (int i = 0; i < messages.length; i++)
                 {
